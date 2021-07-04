@@ -43,7 +43,7 @@ const Administrateur = () => {
             <Header userInfo={userInfo} serviceinfo={'/' + userInfo.service} num={num} />
             <div className="noyeau-marche">
                 <Droite serviceinfo={'/' + userInfo.service} Userinfo={userInfo} />
-                <MilieuAdmin userInfo={userInfo} />
+                <MilieuAdmin />
             </div>
             <Footer />
         </div>

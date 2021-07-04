@@ -1,3 +1,5 @@
+import Axios from 'axios'
+
 import './Style_sheet.css'
 import logoimg from "../../../images/lo.svg"
 import prfp from "../../../images/folder-images-main/imagefille.jpg"
@@ -37,6 +39,13 @@ const Header = ({ userInfo, serviceinfo, num }) => {
     }
     )
 
+    function SubmitFunc(){
+        Axios.post('http://localhost:3006/affch',{})
+    }
+    /*const SubmitFunc2 = () => {
+        Axios.post('http://localhost:3006/affch')
+    }*/
+
     return (
         <header className="head-mon-serv">
 
@@ -49,10 +58,10 @@ const Header = ({ userInfo, serviceinfo, num }) => {
 
                 <ul className="navbar1 navbar">
                     <li className="nav-el">
-                        <NavLink exact to={"../"+serviceinfo} className="link" activeClassName="active">Mon service</NavLink>
+                        <NavLink exact to={"../"+serviceinfo} className="link" activeClassName="active" onClick={SubmitFunc}>Mon service</NavLink>
                     </li>
                     <li className="nav-el">
-                        <Link exact to='../Archive' className="link" activeClassName="active" >Consultation</Link>
+                        <Link exact to='../Archive' className="link" activeClassName="active" onClick={SubmitFunc}>Consultation</Link>
                     </li>
                     <li className="nav-el">
                         <NavLink exact to='../Statistiques' className="link" activeClassName="active">Statistiques</NavLink>

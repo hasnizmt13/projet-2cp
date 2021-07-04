@@ -1,10 +1,45 @@
 import { useState, useEffect } from 'react';
 import validateInfo from './validation.js'
-
+import Moment from "moment"
 const useForm = (validate) => {
-  const [values, setValues] = useState({
-
-    completer: '',
+  const [info, setInfo] = useState( () => {
+    return {
+      completer: '',
+    dateComplement: '',
+    datePay: '',
+    decis: '',
+    respo: '',
+    desc: ''
+  
+    }
+  });
+  const [t, setT] = useState(1)
+  useEffect(() => {
+    fetch("/infor/").then( res => {
+        if (res.ok) {
+            return res.json()
+        }
+    }).then(jsonRes => {
+        if (jsonRes !== undefined){
+            setInfo({...info,
+              completer: jsonRes.comptableInfo.completer,
+              dateComplement: Moment(jsonRes.comptableInfo.dateComplement).format('YYYY-MM-DD'),
+              datePay: Moment(jsonRes.comptableInfo.datePay).format('YYYY-MM-DD'),
+              decis: jsonRes.comptableInfo.decis,
+              respo: jsonRes.comptableInfo.respo,
+              desc: jsonRes.comptableInfo.desc
+            }) 
+            setT(0)
+            //console.log(info)
+        }
+             
+        
+    })
+    
+    
+})
+const [values, setValues] = useState({
+  completer: '',
     dateComplement: '',
     datePay: '',
     decis: '',
@@ -12,7 +47,21 @@ const useForm = (validate) => {
     desc: '',
     file: '',
 
-  });
+});
+  useEffect(() => {
+    setValues({
+      ...values,
+      completer: info.completer,
+      dateComplement: info.dateComplement,
+      datePay: info.datePay,
+      decis: info.decis,
+      respo: info.respo,
+      desc: info.desc,
+    })
+    console.log(values)
+    console.log(info)
+},[t])
+  
   const [errors, setErrors] = useState({});
   
 

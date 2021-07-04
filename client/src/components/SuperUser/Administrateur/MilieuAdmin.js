@@ -19,26 +19,24 @@ let useClickOutside = (handler1) => {
     });
     return menutri;
 }
-const MilieuAdmin = ({ userInfo }) => {
-    const user1 = {
-        nom: 'User User',
-        email: 'email@gmail.com',
-        role: "editeur",
-        service: 'service'
-    };
-    const user2 = {
-        nom: 'User1 User1',
-        email: 'email@gmail.com',
-        role: "editeur",
-        service: 'service'
-    };
-    const user3 = {
-        nom: 'User2 User2',
-        email: 'email@gmail.com',
-        role: "editeur",
-        service: 'service'
-    };
-    let tab = [user1, user2, user3];
+const MilieuAdmin = () => {
+    const [tab, setTab] = useState([])
+    useEffect(() => {
+        fetch("/infoUser/").then( res => {
+            if (res.ok) {
+                return res.json()
+            }
+        }).then(jsonRes => {
+            if (jsonRes !== undefined){
+                setTab(jsonRes.infoUser.user)
+                console.log(tab)
+            }
+                 
+            
+        })
+        
+        
+    })
 
     const [trier, settrier] = useState(false);
     let menutri = useClickOutside(() => {

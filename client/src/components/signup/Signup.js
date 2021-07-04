@@ -45,6 +45,7 @@ const Signup = ({ submitForm }) => {
             
         })
 const SubmitFunc = () => {
+        Axios.post('http://localhost:3006/userAdmin')
         Axios.post('http://localhost:3006/signup', {
         nom: values.username,
         prenom: values.userprenom,

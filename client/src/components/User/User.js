@@ -8,7 +8,6 @@ const User = () => {
     const { id } = useParams();
     const profilinf = JSON.parse(id);
     const [userInfo, setUserInfo] = useState({id: '', nom: '', prenom: '',email: '',psswrd: '',service: '',role: '',CT: ''})
-    const [userIn, setUserIn] = useState({id: '', nom: '', prenom: '',email: '',psswrd: '',service: '',role: '',CT: ''})
     useEffect(() => {
         fetch("/users/").then( res => {
             if (res.ok) {

@@ -12,15 +12,18 @@ import { faFileDownload } from '@fortawesome/free-solid-svg-icons'
 import Header from "../../services/commun/Header.js"
 import Menu from "../../services/commun/Droite.js"
 const Acc = (props) => {
+    
     const { handleChange, handleSubmit, values, errors } = useForm(
         validation
     );
 
     const SubmitFunc3 = () => {
         var cbn = '1'
+        const srvc = 'Bg'
         Axios.post('http://localhost:3006/cbn', {
             cbn: cbn,     
             numero: numDoss,
+            srv: srvc
         })
     }
     const SubmitFunc1 = () => {
@@ -169,7 +172,9 @@ function prev(){
                                 <button className="btn-arreter" > <Link to="../budget" className="lien" onClick={SubmitFunc3}>Arreter</Link> </button>
                             </div>
                             <div className="btn">
-                                <button className="btn-send" type="submit" onClick={SubmitFunc1}> Envoyer </button>
+                                <button className="btn-send" type="submit" onClick={SubmitFunc1}> 
+                                <Link to='../budget'>Envoyer</Link> 
+                                </button>
                             </div>
                             <div className="btn">
                                 <button className="btn-sauv" onClick={SubmitFunc2}>✓ Sauvegarder </button>

@@ -108,7 +108,7 @@ const Card = ( {submitForm} ) => {
                                     <input type="checkbox" value="lsRememberMe" id="rememberMe"/> <label for="rememberMe">Se souvenir de moi</label>
                                 </div>
                                 <div className="remember">
-                                    <a href="">
+                                    <a href="../Reset">
                                         Mot de passe oublié ?
                                     </a>
                                 </div>

@@ -110,6 +110,17 @@
                 }
               }
             }
+            .text-sauv {
+              width: 100%;
+              display: flex;
+              justify-content: flex-end;
+              padding-right: 50px;
+              padding-bottom: 20px;
+
+              span {
+                color: black;
+              }
+            }
               .form {
                 display: flex;
                 flex-direction: column;

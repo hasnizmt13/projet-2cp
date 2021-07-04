@@ -19,19 +19,19 @@ const UserinfoA = ({ id }) => {
                         <table class="styled-table">
                             <tr>
                                 <td class='TP'>NOM</td>
-                                <td>{id.nom}</td>
+                                <td>{id[0]}</td>
                             </tr>
                             <tr>
                                 <td class='TP'>PRENOM</td>
-                                <td>{id.nom}</td>
+                                <td>{id[4]}</td>
                             </tr>
                             <tr>
                                 <td class='TP'>service</td>
-                                <td>{id.service}</td>
+                                <td>{id[2]}</td>
                             </tr>
                             <tr>
                                 <td class='TP'>ROLE</td>
-                                <td>{id.role}</td>
+                                <td>{id[3]}</td>
                             </tr>
                         </table>
                     </div>
@@ -43,7 +43,7 @@ const UserinfoA = ({ id }) => {
                         <table class="styled-table">
                             <tr>
                                 <td class='TP'>ADRESSE E-MAIL</td>
-                                <td>{id.email}</td>
+                                <td>{id[1]}</td>
                             </tr>
                         </table>
                     </div>

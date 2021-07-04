@@ -147,6 +147,22 @@
   text-decoration: none;
 }
 
+.acc-container .mid .form-container .text-sauv {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-right: 50px;
+  padding-bottom: 20px;
+}
+
+.acc-container .mid .form-container .text-sauv span {
+  color: black;
+}
+
 .acc-container .mid .form-container .form {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -28,7 +28,7 @@ const Droite = ({ serviceinfo }) => {
                         <ul className="lien">
 
                             <li className="elem">
-                                <NavLink to="./Settings" className="compte" activeClassName="actif">
+                                <NavLink to="../../Settings" className="compte" activeClassName="actif">
                                     <FontAwesomeIcon icon={faUserCog} className="icon" />
                                    Paramètre du compte
                                 </NavLink>

@@ -1,5 +1,7 @@
 import React from 'react'
 import "./Style_sheet.css"
+import Axios from 'axios'
+
 import { Link } from "react-router-dom"
 const Dossier = ({ numDoss, done, datelim, service, role }) => {
     const [style, setStyle] = React.useState({});
@@ -22,10 +24,15 @@ const Dossier = ({ numDoss, done, datelim, service, role }) => {
     }
     const curentdate = new Date().toLocaleDateString();
 
+    function recuper(){
+        Axios.post('http://localhost:3006/recup' ,{
+            numero: numDoss,
+        })
+    }
     return (
         <div className="marche-dossier">
             <span className="num-dossier date-dossier">
-                <Link to={path}>Dossier n°{numDoss} </Link>
+                <Link to={path} onClick={recuper}>Dossier n°{numDoss} </Link>
             </span>
             <span className="date-dossier">{curentdate}</span>
             <span className="date-dossier">{datelim}</span>
@@ -37,7 +44,7 @@ const Dossier = ({ numDoss, done, datelim, service, role }) => {
                 </div>
             </span>
             <span className="date-dossier form">
-                <a href={path}> Remplire le formulaire</a>
+                <a href={path} onClick={recuper}> Remplire le formulaire</a>
             </span>
         </div>
     )

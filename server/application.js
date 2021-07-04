@@ -41,23 +41,30 @@ const notif_budget = all2.notif_budget
 const notif_compt = all2.notif_compt
 const notif_archv = all2.notif_archv
 const infar = all2.infar
+const inf = all2.inf
 
 const all3 = require('./routes/email')
 const authRouter3 = all3.router
 
 const all4 = require('./routes/compte')
 const authRouter4 = all4.router 
+
+const all5 = require('./routes/usersAdmin')
+const authRouter5 = all5.router
+const infousers = all5.infousers
+
 ///Define routes
 application.use('/', authRouter)
 application.use('/', authRouter2)
 application.use('/', authRouter3)
 application.use('/', authRouter4)
+application.use('/', authRouter5)
 
 
 const app = express()
 router = express.Router()
 var router2 = express.Router()
-
+var router3 = express.Router()
 usersRoute =  (req, res) => {
     res.json({
         erreur: {
@@ -85,21 +92,62 @@ usersRoute =  (req, res) => {
         }
     })
 }
-
 infoRoute = (req, res) => {
     res.json({
         infor: {
             numDoss: nmrDoss.numero,
-            marcheDoss: /*[2, 4, 6] ,*/resDoss,
+            marcheDoss: resDoss,
             commandeDoss: notif_cmnde,
             budgetDoss: notif_budget,
             comptableDoss: notif_compt,
-            archiveDoss: notif_archv /*[1,2,3,4,5,6,7]*/
+            archiveDoss: notif_archv 
         },
         marcheInfo: {
-            respo: "morad",
-            fournisseur: "yoga",
-            objet: "je suis objet"
+            type: inf.type,
+            dateTr: inf.dateTr,
+            decis: inf.decis1,
+            num: inf.num,
+            desc: inf.desc,
+            respo: inf.respo1,
+            fournisseur: inf.four,
+            objet: inf.objt
+        },
+        commandeInfo: {
+            decis: inf.decis2,
+            dateFacPe: inf.dateFacPe,
+            numFacPer: inf.numFacPer,
+            numFacDef: inf.numFacDef,
+            respo: inf.respo2 ,
+            numCom: inf.numCom,
+            dateCom: inf.dateCom,
+            montant: inf.montant,
+            datePr: inf.datePr,
+            numBonRec: inf.numBonRec,
+            dateTr: inf.dateTr2,
+            desc: inf.desc2,
+        },
+        budgetInfo: {
+            dateCF: inf.dateCF ,
+            dateVisa: inf.dateVisa,
+            dateMend: inf.dateMend,
+            respo: inf.respo3,
+            date: inf.dateRec2,
+            motif: inf.motif,
+            dateTr: inf.dateTr3,
+            desc: inf.desc3 
+        },
+        comptableInfo: {
+            completer: inf.completer,
+            dateComplement: inf.dateComplement,
+            datePay: inf.datePay,
+            decis: inf.decis4,
+            respo: inf.respo4 ,
+            desc: inf.desc4
+        },
+        parametreInfo: {
+            nom : info.nom,
+            prenom : info.prenom,
+            adr : info.email,
         },
         archiveInfo: {
             dateLanc: infar.dateLanc,
@@ -147,6 +195,13 @@ infoRoute = (req, res) => {
         }
     })
 }
+infoUser =  (req, res) => {
+    res.json({
+        infoUser: {
+           user: infousers
+        }
+    })
+}
 
 router.get("/", usersRoute)
 app.use("/users/", router)
@@ -154,6 +209,8 @@ app.use("/users/", router)
 router2.get("/",infoRoute)
 app.use("/infor/",router2)
 
+router3.get("/",infoUser)
+app.use("/infoUser/",router3)
 
 
 

@@ -1,20 +1,75 @@
 import { useState, useEffect } from 'react';
 import validateInfo from './validation.js'
-
+import Moment from "moment"
 const useForm = (validate) => {
-  const [values, setValues] = useState({
-
-    dateCF: '',
-    dateVisa: '',
-    dateMend: '',
-    respo: '',
-    date: '',
-    motif: '',
-    dateTr: '',
-    desc: '',
-    file: '',
-
+  const [info, setInfo] = useState( () => {
+    return {
+      dateCF: '',
+      dateVisa: '',
+      dateMend: '',
+      respo: '',
+      date: '',
+      motif: '',
+      dateTr: '',
+      desc: ''
+  
+    }
   });
+  const [t, setT] = useState(1)
+  useEffect(() => {
+    fetch("/infor/").then( res => {
+        if (res.ok) {
+            return res.json()
+        }
+    }).then(jsonRes => {
+        if (jsonRes !== undefined){
+            setInfo({...info,
+              dateCF: Moment(jsonRes.budgetInfo.dateCF).format("YYYYY-MM-DD"),
+              dateVisa: Moment(jsonRes.budgetInfo.dateVisa).format("YYYYY-MM-DD"),
+              dateMend: Moment(jsonRes.budgetInfo.dateMend).format("YYYYY-MM-DD"),
+              respo: jsonRes.budgetInfo.respo,
+              date: Moment(jsonRes.budgetInfo.date).format("YYYYY-MM-DD"),
+              motif: jsonRes.budgetInfo.motif,
+              dateTr: Moment(jsonRes.budgetInfo.dateTr).format("YYYYY-MM-DD"),
+              desc: jsonRes.budgetInfo.desc
+            }) 
+            setT(0)
+            //console.log(info)
+        }
+             
+        
+    })
+    
+    
+})
+const [values, setValues] = useState({
+  dateCF: '',
+  dateVisa: '',
+  dateMend: '',
+  respo: '',
+  date: '',
+  motif: '',
+  dateTr: '',
+  desc: '',
+  file: '',
+
+});
+  useEffect(() => {
+    setValues({
+      ...values,
+      dateCF: info.dateCF,
+      dateVisa: info.dateVisa,
+      dateMend: info.dateMend,
+      respo: info.respo,
+      date: info.date,
+      motif: info.motif,
+      dateTr: info.dateTr,
+      desc: info.desc
+    })
+    console.log(values)
+    console.log(info)
+},[t])
+  
   const [errors, setErrors] = useState(() => {
     return {}
   });

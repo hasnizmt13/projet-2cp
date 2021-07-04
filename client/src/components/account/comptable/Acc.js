@@ -18,10 +18,11 @@ const Acc = (props) => {
 
     const SubmitFunc3 = () => {
         var cbn = '1'
-        
+        const srvc = 'Cp'
         Axios.post('http://localhost:3006/cbn', {
             cbn: cbn,     
             numero: numDoss,
+            srv: srvc
         })
     }
     const SubmitFunc1 = () => {
@@ -172,7 +173,9 @@ function prev(){
                                 <button className="btn-arreter" > <Link to="../comptable" className="lien" onClick={SubmitFunc3}>Arreter</Link> </button>
                             </div>
                             <div className="btn">
-                                <button className="btn-send" type='submit' onClick={SubmitFunc1}> Terminer </button>
+                                <button className="btn-send" type='submit' onClick={SubmitFunc1}>
+                                <Link to='../comptable'>Terminer</Link>
+                                </button>
                             </div>
                             <div className="btn">
                                 <button className="btn-sauv" onClick={SubmitFunc2}>✓ Sauvegarder </button>
@@ -288,7 +291,7 @@ function prev(){
                                     disabled={disable}
                                     value={values.datePay} 
                                     onChange={handleChange}
-                                    name="date-tr"
+                                    name="datePay"
                                     className="date"/>
                                 {errors.datePay && <p className="err-txt">{errors.datePay}</p>}
                             </div>

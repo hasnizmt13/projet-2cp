@@ -5,9 +5,10 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 const Utilisateur = ({ userInfo }) => {
-    const d = userInfo.nom.slice(0, 2).toUpperCase();
+    const d = userInfo[0].toUpperCase();
     const [Delete, setDelete] = useState(false);
     const y = JSON.stringify(userInfo);
+    
     return (
         <div className="marche-dossier ">
             <span className="num-dossier date-dossier">
@@ -16,14 +17,14 @@ const Utilisateur = ({ userInfo }) => {
                         {d}
                     </div>
                     <div className="user">
-                        <Link to={"/User/" + y}> {userInfo.nom} </Link>
+                        <Link to={"/User/" + y}> {userInfo[4]} </Link>
                     </div>
 
                 </div>
             </span>
-            <span className="date-dossier">{userInfo.service}</span>
+            <span className="date-dossier">{userInfo[3]}</span>
             <span className="date-dossier">
-                <a className="form" href="/Parametre/compte">Modifier</a>
+                <a className="form" href="../Parametre/compte">Modifier</a>
                 <span className="delete-icon" onClick={() => setDelete(Delete => !Delete)}> <FontAwesomeIcon icon={faTrashAlt} className="icon" /></span>
             </span>
             {Delete && (<div className="supprimer">

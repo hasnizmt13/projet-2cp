@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import validateInfo from './validation.js'
-
+import Moment from 'moment'
 const useForm = (validate) => {
   // const [formInfo, setFormInfo] = useState({respo: ''})
   //   useEffect(() => {
@@ -18,6 +18,46 @@ const useForm = (validate) => {
             
   //       })  
   //   }, [])
+  const [info, setInfo] = useState( () => {
+    return {
+      type: '',
+      objet: '',
+      fournisseur: '',
+      dateTr: '',
+      respo: '',
+      decis: '',
+      num: '',
+      desc: '',
+  
+    }
+  });
+  const [t, setT] = useState(1)
+  useEffect(() => {
+    fetch("/infor/").then( res => {
+        if (res.ok) {
+            return res.json()
+        }
+    }).then(jsonRes => {
+        if (jsonRes !== undefined){
+            setInfo({...info,
+                respo: jsonRes.marcheInfo.respo,
+                fournisseur : jsonRes.marcheInfo.fournisseur,
+                type : jsonRes.marcheInfo.type,
+                objet : jsonRes.marcheInfo.objet,
+                desc : jsonRes.marcheInfo.desc,
+                num : jsonRes.marcheInfo.num,
+                decis : jsonRes.marcheInfo.decis,
+                dateTr : Moment(jsonRes.marcheInfo.dateTr).format('YYYY-MM-DD')
+            }) 
+            setT(0)
+            
+        }
+             
+        
+    })
+    
+    
+})
   const [values, setValues] = useState( () => {
     return {
       type: '',
@@ -33,7 +73,25 @@ const useForm = (validate) => {
     }
   });
   
-  
+  useEffect(() => {
+    setValues({
+      type: info.type,
+      objet: info.objet,
+      fournisseur: info.fournisseur,
+      dateTr: info.dateTr,
+      respo: info.respo,
+      decis: info.decis,
+      num: info.num,
+      desc: info.desc,
+    })
+    console.log(values)
+    console.log(info)
+},[t])
+  // setTimeout(()=> {
+    
+  //   console.log(info)
+  //   console.log(values)
+  // },300)
   const [errors, setErrors] = useState({});
   const handleChange = e => {
     const { name, value } = e.target;

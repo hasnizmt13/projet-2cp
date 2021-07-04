@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const mysql = require('mysql')
 const bcrypt = require('bcryptjs')
 const router2 = express.Router()
+const nodemailer = require('nodemailer')
+require('dotenv').config()
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -18,39 +20,47 @@ router2.post('/doss/' ,async (req , res) => {
     nmrDoss.numero = 1;
     db.query("INSERT INTO services SET `nmr_dossier_sm`=DEFAULT " , (err , ress) => {
         if(err) {console.log(err.message)}
-        else {console.log('INSERTION EFFECTUE')}
-    })
-    db.query("INSERT INTO doss_marche SET `nmr_dossier`=DEFAULT " , (errorr , rs) => {
-        if(errorr) {console.log(errorr.message)}
-        else {console.log('INSERTION EFFECTUE')}
-    })
-    //TAILLE
-    db.query("SELECT COUNT(*) AS taille FROM doss_marche " , (errr , resss) =>{
-        if(errr){console.log(errr.message)}
-        else{
-        console.log("taille doss" ,resss[0].taille)
-        taille = resss[0].taille
-        }  
-    })
-        // RECUPERATION
-    db.query("SELECT nmr_dossier FROM doss_marche" , (error , results) =>{
-        if(error){console.log("ERR DOSS SELECT",error.message)}
-        else {  
-            console.log("taille 2 = " ,taille)
-            if (resDoss == []) {
-                for (let pas = 0; pas < taille ; pas++) { 
-                resDoss.push(results[pas].nmr_dossier)
-                }
-            }else{resDoss.push(results[taille-1].nmr_dossier)}
-            
-            //affichmarch()
-            console.log('resdos insert',resDoss);
+        else {console.log('INSERTION EFFECTUE 1') 
+            db.query(" SELECT nmr_dossier_sm FROM services WHERE nmr_dossier_sm = ( SELECT  MAX(`nmr_dossier_sm`) FROM services)" , (errrr,resss) =>{
+            if(errrr){console.log(errrr.message)}
+            else{
+                 position = resss[0].nmr_dossier_sm
+                 db.query("INSERT INTO doss_marche SET `nmr_dossier`=?",[position] , (errorr , rs) => {
+                    if(errorr) {console.log(errorr.message)}
+                    else {console.log('INSERTION EFFECTUE 2')}
+                 })
+                //TAILLE
+                db.query("SELECT COUNT(*) AS taille FROM doss_marche " , (errr , resss) =>{
+                    if(errr){console.log(errr.message)}
+                    else{
+                    console.log("taille doss" ,resss[0].taille)
+                    taille = resss[0].taille
+                    }  
+                })
+                    // RECUPERATION
+                db.query("SELECT nmr_dossier FROM doss_marche" , (error , results) =>{
+                    if(error){console.log("ERR DOSS SELECT",error.message)}
+                    else {  
+                        console.log("taille 2 = " ,taille)
+                        if (resDoss == []) {
+                            for (let pas = 0; pas < taille ; pas++) { 
+                            resDoss.push(results[pas].nmr_dossier)
+                            }
+                        }else{resDoss.push(results[taille-1].nmr_dossier)}
+                        
+                        //affichmarch()
+                        console.log('resdos insert',resDoss);
+                    }
+                })
+            }
+            }) 
         }
-    })
+      })
 })
 function affichmarch () {
-    resDoss = []
-        // LA TAILLE 
+    
+    var tab = []
+    // LA TAILLE 
     db.query("SELECT COUNT(*) AS taille FROM doss_marche " , async (errr , resss) =>{
         if(errr){console.log(errr.message)}
         else{
@@ -63,9 +73,15 @@ function affichmarch () {
         if(error){console.log("ERR DOSS SELECT",error.message)}
         else {  
             console.log("taille 2 = " ,taille)
+            for (let i = resDoss.length; i > 0; i--) {
+                resDoss.pop();
+              }
             for (let pas = 0; pas < taille ; pas++) { 
                 resDoss.push(results[pas].nmr_dossier)
+               //resDoss [pas] = results[pas].nmr_dossier
             }
+            //resDoss = tab
+
             console.log('resdos fonction ',resDoss);
         }
     })
@@ -90,6 +106,7 @@ router2.post('/marche/', (req, res) => {
     const numeroDoss = req.body.nm
     const send = req.body.env
 
+    console.log('voilaa :  ',req.body)
     const sqlinsert = "UPDATE services SET `date_de_lancement_sm`=? , `type_de_prestation`=? , objet=? , fournisseur=? , `responsable_de_dossier_sm`=? , `nmr_de_convention`=? , `observation_sm`=? , `duree_de_traitement_de_dossier_sm`=? , `decision_sm`=? , `date_de_transmission_au_scm`=? , `date_douverture_sm`=? where nmr_dossier_sm = "+ numeroDoss
     db.query(sqlinsert, [dt1, tp, objt, fournisseur, rsp, nm, dsc, lmtt, desci, trr, dt2], async (error, results) => {
         if (error) {
@@ -130,11 +147,15 @@ router2.post('/marche/', (req, res) => {
             }
         })
         // SUPPRESSION DE LA NOTIF DU SERVICE PREC
+        db.query("DELETE FROM doss_marche WHERE nmr_dossier=?",num , () => {
+            affichmarch();
+            console.log("llaa ca marchee")
+        })
         }
 })
 
 function affichcmnde () {
-    notif_cmnde = []
+   // notif_cmnde = []
         // LA TAILLE 
         db.query("SELECT COUNT(*) AS taille FROM notif_mar_cmnd " , async (errr , resss) =>{
             if(errr){console.log(errr.message)}
@@ -148,6 +169,9 @@ function affichcmnde () {
         if(error){console.log("ERR SELECT",error.message)}
         else {  
             console.log("taille 2 = " ,taille)
+            for (let i = notif_cmnde.length; i > 0; i--) {
+                notif_cmnde.pop();
+              }
             for (let pas = 0; pas < taille ; pas++) { 
                 notif_cmnde.push(results[pas].nmr_dossier)
             }
@@ -177,10 +201,10 @@ router2.post('/commande/', (req, res) => {
     const ld = req.body.md
     const dsc = req.body.desc 
     const numeroDoss = req.body.nm
-    const send = req.body.env
+    var send = req.body.env
 
     const sqlinsert = "UPDATE services SET `date_de_reception_scm`=? , `date_facture_proforma_scm`=? , `nmr_facture_proforma_scm`=? , `nmr_facture_difinitive_scm`=? , `date_du_bon_commande`=? , `nmr_bon_commande`=? , `responsable_dossier_scm`=?, `montant_scm`=?, `observation_scm`=?, `nmr_dossier_scm`=?, `date_de_reception_de_la_prestation`=?, `decision_scm`=?, `nmr_de_bon_de_reception_scm`=?, `date_denvoi_au_sb`=?, `duree_de_traitement_dossier_scm`=? where nmr_dossier_sm = "+ numeroDoss
-    db.query(sqlinsert, [dt, dt2, nmfape, nmfade, daco, nmco, rsp, mo, dsc, numeroDoss, dtpr, desss, nmbo, ttt, mdd], async (error, results) => {
+    db.query(sqlinsert, [dt, dt2, nmfape, nmfade, daco, nmco, rsp, mo, dsc, numeroDoss, dtpr, desss, nmbo, ttt, mdd], async (error, reslts) => {
         if (error) {
             console.log('la 2: '+error.message)
         } else {
@@ -210,21 +234,30 @@ router2.post('/commande/', (req, res) => {
             if(error){console.log(error.message)}
             else {  
                 console.log("taille 2 = " ,taille)
-                if (notif_budget == []) {
-                    for (let pas = 0; pas < taille ; pas++) { 
-                        notif_budget.push(results[pas].nmr_dossier)
-                    }
-                }else{notif_budget.push(results[taille-1].nmr_dossier)}
+
+                for (let i = notif_budget.length; i > 0; i--) {
+                    notif_budget.pop();
+                  }
+                for (let pas = 0; pas < taille ; pas++) { 
+                    notif_budget.push(results[pas].nmr_dossier)
+                }
+                // if (notif_budget == []) {
+                //     for (let pas = 0; pas < taille ; pas++) { 
+                //         notif_budget.push(results[pas].nmr_dossier)
+                //     }
+                // }else{notif_budget.push(results[taille-1].nmr_dossier)}
                 console.log("notif_budget : ",notif_budget)
             }
         })
         // SUPPRESSION DE LA NOTIF DU SERVICE PREC
-        db.query("DELETE FROM notif_mar_cmnd WHERE nmr_dossier=?",num)
+        db.query("DELETE FROM notif_mar_cmnd WHERE nmr_dossier=?",num , () => {
+            affichcmnde();
+        })
     }
 })
 
 function affichbudget () {
-    notif_budget = []
+   // notif_budget = []
         // LA TAILLE 
         db.query("SELECT COUNT(*) AS taille FROM notif_cmnd_budg " , async (errr , resss) =>{
             if(errr){console.log(errr.message)}
@@ -238,6 +271,9 @@ function affichbudget () {
         if(error){console.log("ERR SELECT",error.message)}
         else {  
             console.log("taille 2 = " ,taille)
+            for (let i = notif_budget.length; i > 0; i--) {
+                notif_budget.pop();
+              }
             for (let pas = 0; pas < taille ; pas++) { 
                 notif_budget.push(results[pas].nmr_dossier)
             }
@@ -261,8 +297,8 @@ router2.post('/budget/', (req, res) => {
     const numeroDoss = req.body.nm
     const send = req.body.env
 
-    const sqlinsert = "UPDATE services SET `date_de_reception_sb`=? , `responsable_dossier_sb`=? , `date_dengagement_au_cf`=? , `date_de_Visa_ou_rejet_definitif_du_controleur_financier`=? , `date_de_mandatement`=? , `motif_de_rejet_eventuel_sb`=?, `observation_sb`=?, `date_de_transmission_au_ac`=?, `nmr_dossier_sb`=? where nmr_dossier_sm = "+ numeroDoss
-    db.query(sqlinsert, [dt, rsp, dtcf, dtvs, dtmnd, mtf, dsc, dt2, numeroDoss], async (error, results) => {
+    const sqlinsert = "UPDATE services SET `date_de_reception_sb`=? , `responsable_dossier_sb`=? , `date_dengagement_au_cf`=? , `date_de_Visa_ou_rejet_definitif_du_controleur_financier`=? , `date_de_mandatement`=? , `motif_de_rejet_eventuel_sb`=?, `observation_sb`=?, `date_de_transmission_au_ac`=?, `nmr_dossier_sb`=?, `duree_de_traitement_dossier_sb`=? where nmr_dossier_sm = "+ numeroDoss
+    db.query(sqlinsert, [dt, rsp, dtcf, dtvs, dtmnd, mtf, dsc, dt2, numeroDoss, ld], async (error, results) => {
         if (error) {
             console.log('la 2: '+error.message)
         } else {
@@ -301,12 +337,14 @@ router2.post('/budget/', (req, res) => {
             }
         })
         // SUPPRESSION DE LA NOTIF DU SERVICE COURANT
-        db.query("DELETE FROM notif_cmnd_budg WHERE nmr_dossier=?",num)
+        db.query("DELETE FROM notif_cmnd_budg WHERE nmr_dossier=?",num , () =>{
+            affichbudget();
+        })
     }
 })
 
 function affichcompt () {
-    notif_compt = []
+    //notif_compt = []
         // LA TAILLE 
         db.query("SELECT COUNT(*) AS taille FROM notif_budg_cmpt " , async (errr , resss) =>{
             if(errr){console.log(errr.message)}
@@ -320,6 +358,9 @@ function affichcompt () {
         if(error){console.log("ERR SELECT",error.message)}
         else {  
             console.log("taille 2 = " ,taille)
+            for (let i = notif_compt.length; i > 0; i--) {
+                notif_compt.pop();
+              }
             for (let pas = 0; pas < taille ; pas++) { 
                 notif_compt.push(results[pas].nmr_dossier)
             }
@@ -344,8 +385,9 @@ router2.post('/comptable/', (req, res) => {
     const numeroDoss = req.body.nm
     const send = req.body.env
 
-    const sqlinsert = "UPDATE services SET `date_reception_ac`=? , `responsable_dossier_ac`=? , `pieces_a_completer`=? , `date_complement_dossier`=? , `date_de_paiment_ac`=? , `decision_acp_ou_rej_ac`=?, `nmr_dossier_ac`=?, `observation_ac`=?, 'cbn'=? where nmr_dossier_sm = "+ numeroDoss
-    db.query(sqlinsert, [dt, rsp, cmplt, cmplmt, py, dsscc, numeroDoss,dsc, cbn], async (error, results) => {
+    console.log(req.body)
+    const sqlinsert = "UPDATE services SET `date_reception_ac`=? , `responsable_dossier_ac`=? , `pieces_a_completer`=? , `date_complement_dossier`=? , `date_de_paiment_ac`=? , `decision_acp_ou_rej_ac`=?, `nmr_dossier_ac`=?, `observation_ac`=?, `cbn`=?, `duree_de_traitement_ac`=? where nmr_dossier_sm = "+ numeroDoss
+    db.query(sqlinsert, [dt, rsp, cmplt, cmplmt, py, dsscc, numeroDoss,dsc, cbn, ld], async (error, results) => {
         if (error) {
             console.log('la 2: '+error.message)
         } else {
@@ -356,7 +398,9 @@ router2.post('/comptable/', (req, res) => {
     if (send == true){
         const num = numeroDoss
         // SUPPRESSION DE LA NOTIF DU SERVICE COURANT
-        db.query("DELETE FROM notif_budg_cmpt WHERE nmr_dossier=?",num)
+        db.query("DELETE FROM notif_budg_cmpt WHERE nmr_dossier=?",num , ()=>{
+            affichcompt();
+        })
     }
 })
 
@@ -368,8 +412,8 @@ router2.post('/nouvcmnd',(req , res) => {
     //INSERER DANS SERVICE MARCHE
     db.query("INSERT INTO services SET `nmr_dossier_sm`=DEFAULT " , (err , ress) => {
         if(err) {console.log(err.message)}
-        else {console.log('INSERTION EFFECTUE')}
-    })
+        else {console.log('INSERTION EFFECTUE')
+
     // RECUPERER POSITION 
     db.query(" SELECT nmr_dossier_sm FROM services WHERE nmr_dossier_sm = ( SELECT  MAX(`nmr_dossier_sm`) FROM services)" , async (errrr,resss) =>{
         if(errrr){console.log(errrr.message)}
@@ -378,7 +422,27 @@ router2.post('/nouvcmnd',(req , res) => {
              // AFFICHER DANS TABLE COMMANDE
              db.query("INSERT INTO notif_mar_cmnd SET `nmr_dossier`=?",[position], (errorr , rs) => {
                 if(errorr) {console.log(errorr.message)}
-                else {console.log('INSERTION COMMANDE')}
+                else{console.log('INSERTION COMMANDE')
+                            // RECUPERER LA TAILLE DU COMMANDE 
+                    db.query("SELECT COUNT(*) AS taille FROM notif_mar_cmnd " , async (errr , resss) =>{
+                        if(errr){console.log(errr.message)}
+                        else{
+                            taille2 = resss[0].taille
+                        }  
+                    })
+                // AFFICHER DANS L'APP
+                    db.query("SELECT nmr_dossier FROM notif_mar_cmnd" , async (error , results) =>{
+                        if(error){console.log(error.message)}
+                        else {  
+                            if (notif_cmnde == []) {
+                                for (let pas = 0; pas < taille2 ; pas++) { 
+                                notif_cmnde.push(results[pas].nmr_dossier)
+                            }
+                            }else{notif_cmnde.push(results[taille2-1].nmr_dossier)}
+                                console.log("notif_cmnde : ",notif_cmnde)
+                            }
+                    }) 
+                }
             })
             // INSERER DANS SERVICE COMMANDE
             db.query("UPDATE services SET `nmr_dossier_scm`=? WHERE nmr_dossier_sm =?" ,[position,position], (errrr , ressss) => {
@@ -388,25 +452,9 @@ router2.post('/nouvcmnd',(req , res) => {
         }
     })     
  
-    // RECUPERER LA TAILLE DU COMMANDE 
-    db.query("SELECT COUNT(*) AS taille FROM notif_mar_cmnd " , async (errr , resss) =>{
-        if(errr){console.log(errr.message)}
-        else{
-            taille2 = resss[0].taille
-        }  
+    }
     })
-    // AFFICHER DANS L'APP
-    db.query("SELECT nmr_dossier FROM notif_mar_cmnd" , async (error , results) =>{
-        if(error){console.log(error.message)}
-        else {  
-            if (notif_cmnde == []) {
-                for (let pas = 0; pas < taille2 ; pas++) { 
-                notif_cmnde.push(results[pas].nmr_dossier)
-                }
-            }else{notif_cmnde.push(results[taille2-1].nmr_dossier)}
-            console.log("notif_cmnde : ",notif_cmnde)
-        }
-    })
+
 
 })
 
@@ -420,13 +468,36 @@ router2.post('/cbn/', (req, res) => {
     
     const cbn = req.body.cbn
     const numeroDoss = req.body.numero
+    const srv = req.body.srv
 
     const sqlinsert = "UPDATE services SET `cbn`=? where nmr_dossier_sm = "+ numeroDoss
-    db.query(sqlinsert, [cbn], async (error, results) => {
+    db.query(sqlinsert, [cbn], (error, results) => {
         if (error) {
             console.log('la 2: '+error.message)
         } else {
             console.log('cbn registered')
+            /// axios de supp de notif
+            if (srv == 'Mr'){
+                db.query("DELETE FROM doss_marche WHERE nmr_dossier=?",numeroDoss, () => {
+                    affichmarch();
+                });
+                
+            }
+            if (srv == 'Cm'){
+                db.query("DELETE FROM notif_mar_cmnd WHERE nmr_dossier=?",numeroDoss, () => {
+                    affichcmnde();
+                })
+            }
+            if (srv == 'Bg'){
+                db.query("DELETE FROM notif_cmnd_budg WHERE nmr_dossier=?",numeroDoss , () =>{
+                    affichbudget();   
+                })   
+            }
+            if (srv == 'Cp'){
+                db.query("DELETE FROM notif_budg_cmpt WHERE nmr_dossier=?",numeroDoss ,() =>{
+                    affichcompt();  
+                })
+            }
         }
     })
 })
@@ -434,7 +505,8 @@ router2.post('/cbn/', (req, res) => {
 var notif_archv = []
 function afficharchv () {
     const la = 1
-    notif_archv = []
+    var c
+    //notif_archv = []
         // LA TAILLE 
         db.query("SELECT COUNT(*) AS taille FROM services WHERE cbn = "+la , async (errr , resss) =>{
             if(errr){console.log(errr.message)}
@@ -448,14 +520,25 @@ function afficharchv () {
         if(error){console.log("ERR SELECT",error.message)}
         else {  
             console.log("taille 2 arr = " ,taille)
-            for (let pas = 0; pas < taille ; pas++) { 
-                notif_archv.push(results[pas].nmr_dossier_sm)
-            }
+                for (let pas = 0; pas < taille ; pas++) {
+                    c = 1
+                    for (let pas2 = 0; pas2 < notif_archv.length ; pas2++) { 
+                        if(results[pas].nmr_dossier_sm == notif_archv[pas2]) {c = 0}
+                    } 
+                    console.log(c)
+                    if (c == 1){notif_archv.push(results[pas].nmr_dossier_sm)}
+                }  
             console.log('archv fonction ',notif_archv);
         }
     })
     return notif_archv;
 }
+
+router2.post('/affch/', (req, res) => {
+     notif_archv = afficharchv()
+     
+   // affichcmnde();
+})
 
 var infar = {}
 router2.post('/archv/', async(req, res) => {
@@ -564,11 +647,192 @@ router2.post('/archv/', async(req, res) => {
     })
 })
 /***************************** */
+var inf = {}
+router2.post('/recup/', (req, res) => {
+    const num = req.body.numero
+    inf.type = ""
+    inf.dateTr =""
+    inf.decis1 = ""
+    inf.num = ""
+    inf.desc = ""
+    inf.respo1 =""
+    inf.four = ""
+    inf.objt = ""
+    //
+    inf.decis2 = ""
+    inf.dateFacPe =  ""
+    inf.numFacPer =  ""
+    inf.numFacDef = ""
+    inf.respo2 =  ""
+    inf.numCom =   ""
+    inf.dateCom =""
+    inf.montant =""
+    inf.datePr = ""
+    inf.numBonRec =""
+    inf.dateTr2 = ""
+    inf.desc2 = ""
+    //
+    inf.dateCF =  ""
+    inf.dateVisa = ""
+    inf.dateMend =""
+    inf.respo3 =""
+    inf.dateRec2 = ""
+    inf.motif = ""
+    inf.dateTr3 = ""
+    inf.desc3 = ""
+    //
+    inf.completer = ""
+    inf.dateComplement = ""
+    inf.datePay =""
+    inf.decis4 =""
+    inf.respo4 = ""
+    inf.desc4 = ""
+    db.query('SELECT * FROM services WHERE nmr_dossier_sm = ?', [num], async (error, results) => {
+        if (error) {
+            console.log(error.message)
+        } else{ 
+            /////////
+            inf.type = results[0].type_de_prestation
+            inf.dateTr = results[0].date_de_transmission_au_scm
+            inf.decis1 =  results[0].decision_sm
+            inf.num = results[0].nmr_de_convention
+            inf.desc = results[0].observation_sm,
+            inf.respo1 = results[0].responsable_de_dossier_sm
+            inf.four = results[0].fournisseur
+            inf.objt = results[0].objet
+            ////////
+            inf.decis2 = results[0].decision_scm
+            inf.dateFacPe = results[0].date_facture_proforma_scm
+            inf.numFacPer = results[0].nmr_facture_proforma_scm
+            inf.numFacDef = results[0].nmr_facture_difinitive_scm
+            inf.respo2 = results[0].responsable_dossier_scm
+            inf.numCom =  results[0].nmr_bon_commande
+            inf.dateCom = results[0].date_de_reception_scm
+            inf.montant = results[0].montant_scm
+            inf.datePr = results[0].date_de_reception_de_la_prestation
+            inf.numBonRec = results[0].nmr_de_bon_de_reception_scm
+            inf.dateTr2 = results[0].date_denvoi_au_sb
+            inf.desc2 = results[0].observation_scm
+            ////////
+            inf.dateCF =  results[0].date_dengagement_au_cf
+            inf.dateVisa = results[0].date_de_Visa_ou_rejet_definitif_du_controleur_financier 
+            inf.dateMend = results[0].date_de_mandatement
+            inf.respo3 = results[0]. responsable_dossier_sb
+            inf.dateRec2 =  results[0].date_de_reception_sb
+            inf.motif = results[0].motif_de_rejet_eventuel_sb
+            inf.dateTr3 = results[0].date_de_transmission_au_ac
+            inf.desc3 = results[0].observation_sb
+            //////////
+            inf.completer =  results[0].pieces_a_completer
+            inf.dateComplement = results[0].date_complement_dossier
+            inf.datePay = results[0].date_de_paiment_ac
+            inf.decis4 = results[0].decision_acp_ou_rej_ac
+            inf.respo4 = results[0].responsable_dossier_ac
+            inf.desc4 = results[0].observation_ac
+            /////////
+            console.log('RESULT ',inf)
 
+        }
+    })
+})
+
+/***************************** */
+
+function entierAleatoire(min, max)
+{
+ return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+//Utilisation
+//La variable contient un nombre aléatoire compris entre 1 et 10
+var code = entierAleatoire(2000, 9999);
+var object = {}
+object.code = code
+var reponses = {}
+router2.post('/forgot/', (req, res) => {
+
+    const adrss_email = req.body.mail
+    reponses.valide = ''
+
+    console.log('heooo',adrss_email,'//',code)
+
+    db.query('SELECT * FROM user WHERE email = ?', [adrss_email], async (error, results) => {
+        if (error) {
+            console.log(error.message)
+        }
+        if (results.length == 0) {
+            reponses.valide = 'inexistant !!'
+            console.log('inexistant !!')
+        } else {
+            reponses.valide = 'entrer le code de confirmation'
+            console.log('entrer le code de confirmation')
+            //send//// ENVOYER ET VERIFIER
+            const transport = nodemailer.createTransport({
+                host : 'smtp.gmail.com',//process.env.MAIL_HOST,
+                port : process.env.MAIL_PORT, 
+                auth: {
+                    pass : process.env.MAIL_PASS,
+                    user : process.env.MAIL_USER
+                }
+            })
+            var objet = "Code de confirmation "
+            var message = {
+                from : process.env.MAIL_FROM, 
+                to : "hasnizoumata@gmail.com", 
+                subject : objet,
+               /* html : `<p>Salut,<br>voici votre code de confirmation : </p><h1> 
+                <script type="text/javascript">
+                   document.write(code)
+                </script>
+             </h1><br>Cordialement.`*/
+                text: 'Salut, voici votre code de confirmation: '+code
+            };
+            //`+{code}+`
+            await transport.sendMail(message, (err,res) => {
+            if(err){console.log('hii: ',err.message)}
+            else{console.log('BIEN CONNECTE')}
+            })
+        }
+    })
+})
+
+router2.post('/code/', (req, res) => {
+
+    const code_confirmation = req.body.cc
+    reponses.ccval = ''
+
+    console.log('heooo')
+
+    if (code_confirmation == code){
+        reponses.ccval = 'Entrer le nouveau mot de passe'
+        console.log('Entrer le nouveau mot de passe')
+    } else {
+        reponses.ccval = 'Faux code de confirmation !!'
+        console.log('Faux code de confirmation !!')
+    }
+})
+
+router2.post('/newpsswrd/', async (req, res) => {
+
+    reponses.trmn = ''
+    const newpsswrd = req.body.newpsswrd
+    const adrss_email = req.body.mail
+
+    const hashednewpsswrd = await bcrypt.hash( newpsswrd, 8)
+    console.log('mot de passe: ',hashednewpsswrd , adrss_email)   
+    
+    db.query("UPDATE user SET password=? WHERE email=?",[hashednewpsswrd,adrss_email] ,(err,ress) => {
+        if(err){console.log(err.message)}
+        else{                    console.log('new password registered')
+            reponses.trmn = 'mot de passe mis à jour avec succés'
+        }
+    }) 
+})
+
+/*router2.post('http://localhost:3006/check', (req, res) => {*/
 
 affichmarch();
-affichcmnde();
-affichbudget();
-affichcompt();
-afficharchv ()
-module.exports ={router2 , nmrDoss , resDoss , notif_cmnde , notif_budget , notif_compt , notif_archv , infar}
+notif_cmnde = affichcmnde();
+notif_budget = affichbudget();
+notif_compt = affichcompt();
+notif_archv = afficharchv ()
+module.exports ={router2 , nmrDoss , resDoss , notif_cmnde , notif_budget , notif_compt , notif_archv , infar , inf }

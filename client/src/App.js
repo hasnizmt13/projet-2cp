@@ -21,7 +21,8 @@ import Comptable from "./components/services/comptabilite/Comptable.js"
 import BudgetForm from "./components/account/budget/Acc.js"
 import CommandeForm from "./components/account/commandes/Acc.js"
 import ComptableForm from "./components/account/comptable/Acc.js"
-
+import Reset from "./components/Resetpwd/Reset.js"
+import ResetPass from "./components/Resetpwd/ResetPassword.js"
 import User from "./components/User/User.js"
 import Ordonnateur from "./components/SuperUser/Ordonnateur/Ordonnateur.js"
 
@@ -42,6 +43,10 @@ function App() {
           
           <Route exact path='/Aide' exact component={Ad} />
           <Route exact path='/En-savoir-plus' exact component={Savoirplus} />
+          
+          <Route exact path='/Reset' exact component={Reset} />
+          <Route exact path='/Resetpwd' exact component={ResetPass} />
+
 
           <Route exact path='/ordonnateur' exact component={Ordonnateur} />
           <Route exact path='/admin' exact component={AdminPage} />
