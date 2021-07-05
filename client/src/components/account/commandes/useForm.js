@@ -16,6 +16,8 @@ const useForm = (validate) => {
     numBonRec: '',
     dateTr: '',
     desc: '',
+    duree: '',
+    date: ''
   
     }
   });
@@ -40,6 +42,8 @@ const useForm = (validate) => {
               numBonRec: jsonRes.commandeInfo.numBonRec,
               dateTr: Moment(jsonRes.commandeInfo.dateTr).format('YYYY-MM-DD'),
               desc: jsonRes.commandeInfo.desc,
+              duree: jsonRes.commandeInfo.duree2,
+              date: jsonRes.commandeInfo.date2
             }) 
             setT(0)
             //console.log(info)
@@ -64,6 +68,8 @@ const [values, setValues] = useState({
   dateTr: '',
   desc: '',
   file: '',
+  duree: '',
+  date: ''
 
 });
   useEffect(() => {
@@ -81,6 +87,8 @@ const [values, setValues] = useState({
     numBonRec: info.numBonRec,
     dateTr: info.dateTr,
     desc: info.desc,
+    duree: info.duree,
+    date: info.date
     })
     console.log(values)
     console.log(info)

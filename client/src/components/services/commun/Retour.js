@@ -6,7 +6,7 @@ const Retour = ({ serviceinfo }) => {
         <div className="Buttom-retour">
             <button>
                 <FontAwesomeIcon icon={faLongArrowAltLeft} className="icon" />
-                <a href={serviceinfo}>Espace de travail</a>
+                <a href={'../' + serviceinfo}>Espace de travail</a>
             </button>
         </div>
     )

@@ -94,6 +94,9 @@ router.post('/signup/', (req, res) => {
                         console.log('la 2: '+error.message)
                     } else {
                         console.log('user registered')
+                        const all = require('./usersAdmin')
+                        //const info = all.Affichuser
+                        all.Affichuser();
                     }
                 })
             }

@@ -3,6 +3,7 @@ import Axios from 'axios'
 import React, { useState } from "react";
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from "react-router-dom"
 import '../../index.css'
 
 export default function ResetPassword() {
@@ -84,7 +85,9 @@ export default function ResetPassword() {
                         </div>
 
                         <div className="btn-login" >
-                            <button type="submit" className="btn-sign"  onClick={SubmitFunc} > Se connecter </button>
+                            <button type="submit" className="btn-sign"  onClick={SubmitFunc} > 
+                            <Link to="../login" className="lien">Se connecter</Link>
+                             </button>
                         </div>
                     </form>
                 </div>

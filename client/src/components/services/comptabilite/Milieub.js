@@ -2,8 +2,7 @@ import '../commun/Style_sheet.css'
 import React, { useState, useEffect, useRef } from "react";
 import Dossier from "../commun/Dossier.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import Trier from '../commun/Trier'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Axios from 'axios'
 let useClickOutside = (handler1) => {
     let menutri = useRef();
@@ -27,17 +26,17 @@ const Milieub = ({ userInfo }) => {
     function addChild() {
         Axios.post('http://localhost:3006/doss', {})
         var showdate = new Date();
-        fetch("/infor/").then( res => {
+        fetch("/infor/").then(res => {
             if (res.ok) {
                 return res.json()
             }
         }).then(jsonRes => {
-            if (jsonRes !== undefined){
+            if (jsonRes !== undefined) {
                 setNumDoss(jsonRes.infor.numDoss)
                 setNum(jsonRes.infor.marcheDoss)
-                
-            }  
-        }) 
+
+            }
+        })
 
     }
 
@@ -52,7 +51,7 @@ const Milieub = ({ userInfo }) => {
             if (jsonRes !== undefined) {
                 setNumDoss(jsonRes.infor.numDoss)
                 setNum(jsonRes.infor.comptableDoss)
-                if (Num !== []){
+                if (Num !== []) {
                     setx(true)
                 }
             }
@@ -61,6 +60,33 @@ const Milieub = ({ userInfo }) => {
 
     })
     const [trier, settrier] = useState(false);
+    /************tri */
+    function triertab(y) {
+        settrier(!trier);
+        if (y == "datecréation") {
+            const sorttest2 = Num.sort(
+                (a, b) => a.datecreation.split('/').reverse().join().localeCompare(b.datecreation.split('/').reverse().join())
+            );
+
+        }
+        if (y == "datelimite") {
+            const sorttest2 = Num.sort(
+                (a, b) => a.datelimite.split('/').reverse().join().localeCompare(b.datelimite.split('/').reverse().join())
+            );
+
+        }
+        if (y == "num") {
+            const sorttest2 = Num.sort((a, b) => (a.num < b.num ? -1 : Number(a.num > b.num)));
+
+        }
+
+        if (y == "avancement") {
+            const sorttest2 = Num.sort((a, b) => (a.avancement < b.avancement ? -1 : Number(a.avancement > b.avancement)));
+
+        }
+    }
+
+    /*************** */
     let menutri = useClickOutside(() => {
         settrier(false);
     }
@@ -68,19 +94,14 @@ const Milieub = ({ userInfo }) => {
     return (
         <div className="partie-milieu">
 
-            <h3> Bienvenue dans votre espace de travail dans le service {userInfo.role}!</h3>
+            <h3> Bienvenue dans votre espace de travail dans le service Comptabilité.</h3>
             <p>Vous pouvez consulter tous les dossiers en cours dans cette page et finaliser leurs traitement </p>
             <div className="content-marche">
                 <div className="btn-contain">
                     <div>
 
                     </div>
-                    <div className="searchbar">
-                        <form class="example" >
-                            <input type="text" placeholder="   Rechercher.." name="search2" />
-                            <button type="submit" className="button"><FontAwesomeIcon icon={faSearch} className="icon" /></button>
-                        </form>
-                    </div>
+
                 </div>
 
                 <div className="titre-nouveau">
@@ -93,14 +114,30 @@ const Milieub = ({ userInfo }) => {
                     </div>
                 </div>
                 <div ref={menutri}>
-                    {trier && (<Trier />)}
+                    {trier && (<div className="tri-menu">
+                        <ul className="list-tri">
+                            <li className="item-tri" onClick={() => triertab("datecréation")}>
+                                Dernière modification
+                            </li >
+                            <li className="item-tri" onClick={() => triertab("datelimite")}>
+                                par date limite
+                            </li>
+                            <li className="item-tri" onClick={() => triertab("num")}>
+                                par Numéro de dossier
+                            </li>
+                            <li className="item-tri" onClick={() => triertab("avancement")}>
+                                par le taux d'avancement
+                            </li>
+
+                        </ul>
+                    </div>)}
                 </div>
                 <div className="titles" onClick={addChild}>
-                    <span>Numéro de dossier</span>
-                    <span>Dernière modification</span>
-                    <span>Date limite</span>
-                    <span>Avancement</span>
-                    <span className="final">Formulaire</span>
+                    <p>Numéro de dossier</p>
+                    <p>Dernière modification</p>
+                    <p>Date limite</p>
+                    <p>Avancement</p>
+                    <p className="final">Formulaire</p>
 
                 </div>
 

@@ -20,22 +20,6 @@ let useClickOutside = (handler1) => {
     return menutri;
 }
 const MilieuOrd = () => {
-    const dossierM = {
-        num: '4',
-        service: 'marché',
-        datecreation: '15/06/2021',
-        datelimite: '30/06/2021',
-        avancement: '30',
-        path: "/marche-form/"
-    };
-    const dossierC = {
-        num: '3',
-        service: 'Commande',
-        datecreation: '15/06/2021',
-        datelimite: '30/06/2021',
-        avancement: '30',
-        path: "/commande-form/"
-    };
     const [x, setx] = useState(false);
     const Num = [dossierC, dossierC, dossierM, dossierM]
     const [trier, settrier] = useState(false);
@@ -96,8 +80,8 @@ const MilieuOrd = () => {
                     x && (
                         <div className="creer-menu">
                             <div className="catalogue">
-                                <a href={"/marche-form/" + s} onClick={() => setx(x => !x)}>Service marché</a>
-                                <a href={"/commande-form/" + s} onClick={() => setx(x => !x)}> Service commande </a>
+                                <span onClick={SubmitFunc1}>Service marché</span>
+                                <span onClick={SubmitFunc2}> Service commande </span>
                             </div>
                             <div className="annuler">
                                 <p className="ann" onClick={() => setx(x => !x)}>annuler</p>

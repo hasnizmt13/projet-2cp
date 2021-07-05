@@ -45,7 +45,6 @@ const Signup = ({ submitForm }) => {
             
         })
 const SubmitFunc = () => {
-        Axios.post('http://localhost:3006/userAdmin')
         Axios.post('http://localhost:3006/signup', {
         nom: values.username,
         prenom: values.userprenom,
@@ -67,6 +66,7 @@ const SubmitFunc = () => {
         password: err.password,
         password2: err.password2
     })
+    Axios.post('http://localhost:3006/userAdmin')
     console.log(errors)
 }
 

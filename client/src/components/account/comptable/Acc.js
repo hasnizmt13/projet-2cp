@@ -33,7 +33,7 @@ const Acc = (props) => {
 
         cbn: cbn,
         desiis: values.decis,
-        date: debutDate,
+        date: values.date,
         respo: values.respo,
         completer: values.completer,
         datecomplement: values.dateComplement,
@@ -47,11 +47,12 @@ const Acc = (props) => {
         })
     }
     const SubmitFunc2 = () => {
+        setP(true)
         var envo = false
         Axios.post('http://localhost:3006/comptable', {
 
         desiis: values.decis,
-        date: debutDate,
+        date: values.date,
         respo: values.respo,
         completer: values.completer,
         datecomplement: values.dateComplement,
@@ -71,22 +72,10 @@ const Acc = (props) => {
     if (all % 10 == 1){
         disable = false
     }
-    var duree = 10;
+    
     var date = new Date()
-    var debutDate = date.getFullYear()+'-'
-    if (date.getMonth()<10){
-        debutDate += '0'+date.getMonth()+'-'
-    }
-    else {
-        debutDate += date.getMonth()+'-'+date.getDate();
-    }
-    if (date.getDate() < 10){
-        debutDate += '0'+date.getDate()
-    }
-    else{
-        debutDate += date.getDate();
-    }
-    var date2 = new Date(date.getTime() +(duree*24*60*60*1000))
+    
+    var date2 = new Date(date.getTime() +((values.duree + 30)*24*60*60*1000))
     var limiteDate = date2.getFullYear()+'-'
     if (date2.getMonth()<10){
         limiteDate += '0'+date2.getMonth()+'-'
@@ -159,6 +148,7 @@ function prev(){
         setEl(el -1)
     }
 }
+const [p, setP] = useState(false)
   const serviceinfo = "./"+userInfo.service;
     return (
         <form onSubmit={handleSubmit} className="acc-container" noValidate>
@@ -182,6 +172,9 @@ function prev(){
                             </div>
                         </div>
                     </div>
+                    {p && <div className="text-sauv">
+                        <span>Les données ont bien été sauvegarder</span>
+                    </div>}
                     <div className="marche-form form">
                         {el == 1 && <div className="form">
                         <div className="cont">
@@ -195,8 +188,8 @@ function prev(){
                                 <input 
                                     type= "date"
                                     disabled={disable}
-                                    value={debutDate} 
-                                    name="debutDate"
+                                    value={values.date} 
+                                    name="date"
                                     className="date"/>
                             </div>
                         </div>

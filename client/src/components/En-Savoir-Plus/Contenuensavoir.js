@@ -1,10 +1,10 @@
 import "../services/commun/Style_sheet.css"
 import logoimg from "../../images/lo.svg"
-import mk from "../../images/mk.png"
-import cm from "../../images/cm.png"
-import ms from "../../images/ms.png"
+import mk from "../../images/mk.jpg"
+import cm from "../../images/cm.jpg"
+import ms from "../../images/ms.jpg"
 import sd from "../../images/sd.png"
-import ml from "../../images/ml.png"
+import ml from "../../images/ml.jpg"
 import hz from "../../images/hz.png"
 
 const Contenuensavoir = () => {
@@ -82,7 +82,7 @@ const Contenuensavoir = () => {
                                     <div className="info">
                                         <h4 >Mourad Larbi Messaoudi</h4>
 
-                                        Etudiant 2CPI G04
+                                        Etudiant 2CPI G03
                                         <br />
                                         Role : Frontend ET Backend
                                     </div>
@@ -153,7 +153,7 @@ const Contenuensavoir = () => {
                                     <div className="info">
                                         <h4 >Hasni Zoumata</h4>
 
-                                        Etudiant 2CPI G09 <br />
+                                        Etudiant 2CPI G04 <br />
                                         Role :Backend et BDD
 
                                     </div>

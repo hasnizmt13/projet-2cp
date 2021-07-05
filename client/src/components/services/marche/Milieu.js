@@ -2,8 +2,7 @@ import '../commun/Style_sheet.css'
 import React, { useState, useEffect, useRef } from "react";
 import Dossier from "../commun/Dossier.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import Trier from '../commun/Trier'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Axios from 'axios'
 let useClickOutside = (handler1) => {
     let menutri = useRef();
@@ -27,34 +26,34 @@ const Milieu = ({ userInfo }) => {
     function addChild() {
         Axios.post('http://localhost:3006/doss', {})
         var showdate = new Date();
-        fetch("/infor/").then( res => {
+        fetch("/infor/").then(res => {
             if (res.ok) {
                 return res.json()
             }
         }).then(jsonRes => {
-            if (jsonRes !== undefined){
+            if (jsonRes !== undefined) {
                 setNumDoss(jsonRes.infor.numDoss)
                 setNum(jsonRes.infor.marcheDoss)
-                
-            }  
-        }) 
+
+            }
+        })
 
     }
 
     function addChild2() {
         Axios.post('http://localhost:3006/doss2', {})
         var showdate = new Date();
-        fetch("/infor/").then( res => {
+        fetch("/infor/").then(res => {
             if (res.ok) {
                 return res.json()
             }
         }).then(jsonRes => {
-            if (jsonRes !== undefined){
+            if (jsonRes !== undefined) {
                 setNumDoss(jsonRes.infor.numDoss)
                 setNum(jsonRes.infor.marcheDoss)
-                
-            }  
-        }) 
+
+            }
+        })
 
     }
     const [numDoss, setNumDoss] = useState(0)
@@ -69,23 +68,50 @@ const Milieu = ({ userInfo }) => {
                 setNumDoss(jsonRes.infor.numDoss)
                 setNum(jsonRes.infor.marcheDoss)
                 console.log(jsonRes.infor.marcheDoss)
-                if (Num !== []){
+                if (Num !== []) {
                     setx(true)
                 }
             }
         })
     })
+    /**  TRi */
     const [trier, settrier] = useState(false);
+    function triertab(y) {
+        settrier(!trier);
+        if (y == "datecréation") {
+            const sorttest2 = Num.sort(
+                (a, b) => a.datecreation.split('/').reverse().join().localeCompare(b.datecreation.split('/').reverse().join())
+            );
+
+        }
+        if (y == "datelimite") {
+            const sorttest2 = Num.sort(
+                (a, b) => a.datelimite.split('/').reverse().join().localeCompare(b.datelimite.split('/').reverse().join())
+            );
+
+        }
+        if (y == "num") {
+            const sorttest2 = Num.sort((a, b) => (a.num < b.num ? -1 : Number(a.num > b.num)));
+
+        }
+
+        if (y == "avancement") {
+            const sorttest2 = Num.sort((a, b) => (a.avancement < b.avancement ? -1 : Number(a.avancement > b.avancement)));
+
+        }
+    }
+
+    /*************** */
     let menutri = useClickOutside(() => {
         settrier(false);
     }
     )
-    
+
     return (
         <div className="partie-milieu">
 
-            <h3> Bienvenue dans votre espace de travail dans le service {userInfo.role}!</h3>
-            <p>Ajoutez des nouveaux dossiers et commencez à travailler en remplissant les formulaires puis les transferer au service commande.</p>
+            <h3> Bienvenue dans votre espace de travail dans le service marché!</h3>
+            <p>Ajoutez des nouveaux dossiers et commencez à travailler en remplissant les formulaires .</p>
             <div className="content-marche">
                 <div className="btn-contain">
                     <div className="nouveau">
@@ -93,12 +119,7 @@ const Milieu = ({ userInfo }) => {
                             <p>Nouveau +</p>
                         </button>
                     </div>
-                    <div className="searchbar">
-                        <form class="example" >
-                            <input type="text" placeholder="   Rechercher.." name="search2" />
-                            <button type="submit" className="button"><FontAwesomeIcon icon={faSearch} className="icon" /></button>
-                        </form>
-                    </div>
+
                 </div>
 
                 <div className="titre-nouveau">
@@ -111,14 +132,29 @@ const Milieu = ({ userInfo }) => {
                     </div>
                 </div>
                 <div ref={menutri}>
-                    {trier && (<Trier />)}
+                    {trier && (<div className="tri-menu">
+                        <ul className="list-tri">
+                            <li className="item-tri" onClick={() => triertab("datecréation")}>
+                                Dernière modification
+                            </li >
+                            <li className="item-tri" onClick={() => triertab("datelimite")}>
+                                par date limite
+                            </li>
+                            <li className="item-tri" onClick={() => triertab("num")}>
+                                par Numéro de dossier
+                            </li>
+                            <li className="item-tri" onClick={() => triertab("avancement")}>
+                                par le taux d'avancement
+                            </li>
+                        </ul>
+                    </div>)}
                 </div>
                 <div className="titles">
-                    <span>Numéro de dossier</span>
-                    <span>Dernière modification</span>
-                    <span>Date limite</span>
-                    <span>Avancement</span>
-                    <span className="final">Formulaire</span>
+                    <p>Numéro de dossier</p>
+                    <p>Dernière modification</p>
+                    <p>Date limite</p>
+                    <p>Avancement</p>
+                    <p className="final">Formulaire</p>
                 </div>
 
                 {

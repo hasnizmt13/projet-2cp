@@ -28,6 +28,8 @@ const useForm = (validate) => {
       decis: '',
       num: '',
       desc: '',
+      duree1: '',
+      dateCreate: ''
   
     }
   });
@@ -47,7 +49,9 @@ const useForm = (validate) => {
                 desc : jsonRes.marcheInfo.desc,
                 num : jsonRes.marcheInfo.num,
                 decis : jsonRes.marcheInfo.decis,
-                dateTr : Moment(jsonRes.marcheInfo.dateTr).format('YYYY-MM-DD')
+                dateTr : Moment(jsonRes.marcheInfo.dateTr).format('YYYY-MM-DD'),
+                duree1: jsonRes.marcheInfo.duree1,
+                dateCreate: jsonRes.marcheInfo.dateCreate
             }) 
             setT(0)
             
@@ -69,6 +73,8 @@ const useForm = (validate) => {
       num: '',
       desc: '',
       file: '',
+      duree1: '',
+      dateCreate: ''
   
     }
   });
@@ -83,6 +89,8 @@ const useForm = (validate) => {
       decis: info.decis,
       num: info.num,
       desc: info.desc,
+      duree1: info.duree1,
+      dateCreate : info.dateCreate
     })
     console.log(values)
     console.log(info)

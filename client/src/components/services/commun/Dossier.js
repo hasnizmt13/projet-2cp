@@ -43,7 +43,7 @@ const Dossier = ({ numDoss, done, datelim, service, role }) => {
 			    </div>
                 </div>
             </span>
-            <span className="date-dossier form">
+            <span className="date-dossier btn-remplir">
                 <a href={path} onClick={recuper}> Remplire le formulaire</a>
             </span>
         </div>

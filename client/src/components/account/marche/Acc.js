@@ -33,7 +33,7 @@ const Acc = (props) => {
         lmdt: limiteDate,
         desic: values.decis,
         tr: values.dateTr,
-        date1: debutDate,
+        date1: values.dateCreate,
         date2: debutDate2,
         type: values.type,
         objet: values.objet,
@@ -54,7 +54,7 @@ const Acc = (props) => {
             lmdt: limiteDate,
             desic: values.decis,
             tr: values.dateTr,
-            date1: debutDate,
+            date1: values.dateCreate,
             date2: debutDate2,
             type: values.type,
             objet: values.objet,
@@ -79,21 +79,20 @@ const Acc = (props) => {
     // var service = obj.service;
 
     
-    var duree = 10;
     var date = new Date()
-    var debutDate = date.getFullYear()+'-'
-    if (date.getMonth()<10){
-        debutDate += '0'+date.getMonth()+'-'
-    }
-    else {
-        debutDate += date.getMonth()+'-'+date.getDate();
-    }
-    if (date.getDate() < 10){
-        debutDate += '0'+date.getDate()
-    }
-    else{
-        debutDate += date.getDate();
-    }
+    // var debutDate = date.getFullYear()+'-'
+    // if (date.getMonth()<10){
+    //     debutDate += '0'+date.getMonth()+'-'
+    // }
+    // else {
+    //     debutDate += date.getMonth()+'-'+date.getDate();
+    // }
+    // if (date.getDate() < 10){
+    //     debutDate += '0'+date.getDate()
+    // }
+    // else{
+    //     debutDate += date.getDate();
+    // }
     //
     var date3 = new Date()
     var debutDate2 = date3.getFullYear()+'-'
@@ -110,7 +109,7 @@ const Acc = (props) => {
         debutDate2 += date3.getDate();
     }
     //
-    var date2 = new Date(date.getTime() +(duree*24*60*60*1000))
+    var date2 = new Date(date.getTime() +((30 + values.duree1)*24*60*60*1000))
     var limiteDate = date2.getFullYear()+'-'
     if (date2.getMonth()<10){
         limiteDate += '0'+date2.getMonth()+'-'
@@ -282,8 +281,8 @@ const [p,setP] = useState(false)
                                 <input 
                                     type= "date"
                                     disabled={disable}
-                                    value={debutDate} 
-                                    name="date"
+                                    value={values.dateCreate} 
+                                    name="dateCreate"
                                     className="date"/>
                             </div>
                         </div>
@@ -301,7 +300,7 @@ const [p,setP] = useState(false)
                                     type= "date"
                                     disabled={disable}
                                     value={debutDate2} 
-                                    name="date3"
+                                    name="debutDate2"
                                     className="date"/>
                             </div>
                         </div>

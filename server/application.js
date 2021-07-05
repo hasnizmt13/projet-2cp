@@ -53,13 +53,15 @@ const all5 = require('./routes/usersAdmin')
 const authRouter5 = all5.router
 const infousers = all5.infousers
 
+const all6 = require('./routes/duree')
+const authRouter6 = all6.router
 ///Define routes
 application.use('/', authRouter)
 application.use('/', authRouter2)
 application.use('/', authRouter3)
 application.use('/', authRouter4)
 application.use('/', authRouter5)
-
+application.use('/', authRouter6)
 
 const app = express()
 router = express.Router()
@@ -110,7 +112,9 @@ infoRoute = (req, res) => {
             desc: inf.desc,
             respo: inf.respo1,
             fournisseur: inf.four,
-            objet: inf.objt
+            objet: inf.objt,
+            duree1 : inf.duree1,
+            dateCreate: inf.create
         },
         commandeInfo: {
             decis: inf.decis2,
@@ -125,6 +129,9 @@ infoRoute = (req, res) => {
             numBonRec: inf.numBonRec,
             dateTr: inf.dateTr2,
             desc: inf.desc2,
+            duree2 : inf.duree2,
+            date2: inf.date2
+
         },
         budgetInfo: {
             dateCF: inf.dateCF ,
@@ -134,7 +141,9 @@ infoRoute = (req, res) => {
             date: inf.dateRec2,
             motif: inf.motif,
             dateTr: inf.dateTr3,
-            desc: inf.desc3 
+            desc: inf.desc3,
+            duree3 : inf.duree3,
+            date3: inf.date3 
         },
         comptableInfo: {
             completer: inf.completer,
@@ -142,7 +151,9 @@ infoRoute = (req, res) => {
             datePay: inf.datePay,
             decis: inf.decis4,
             respo: inf.respo4 ,
-            desc: inf.desc4
+            desc: inf.desc4,
+            duree4 : inf.duree4,
+            date4: inf.date4
         },
         parametreInfo: {
             nom : info.nom,

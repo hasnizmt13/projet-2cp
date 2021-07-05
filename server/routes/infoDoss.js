@@ -29,6 +29,10 @@ router2.post('/doss/' ,async (req , res) => {
                     if(errorr) {console.log(errorr.message)}
                     else {console.log('INSERTION EFFECTUE 2')}
                  })
+                 var data = [20 , 10 , 5 , 5 , position]
+                 db.query("UPDATE services SET duree1=? , duree2=? , duree3=? , duree4=? , create_time=DEFAULT WHERE nmr_dossier_sm =?", data , (err,results) => {
+                     if(err){console.log(err.message)}
+                 })
                 //TAILLE
                 db.query("SELECT COUNT(*) AS taille FROM doss_marche " , (errr , resss) =>{
                     if(errr){console.log(errr.message)}
@@ -120,6 +124,12 @@ router2.post('/marche/', (req, res) => {
         const num = numeroDoss
         var taille = 0
         console.log(num)
+        var date = new Date();
+        //
+        db.query('UPDATE services SET march_cmnde=? WHERE nmr_dossier_sm=?', [date , num] , async (eror,ress) => {
+            if(eror) {console.log(eror.message)}
+            else {console.log('INSERT')}
+        })
         // INSERTION
         db.query('INSERT INTO notif_mar_cmnd SET nmr_dossier=?', [num] , async (err,ress) => {
             if(err) {console.log(err.message)}
@@ -216,6 +226,12 @@ router2.post('/commande/', (req, res) => {
         const num = numeroDoss
         var taille = 0
         console.log(num)
+        var date = new Date();
+        //
+        db.query('UPDATE services SET cmnde_budget=? WHERE nmr_dossier_sm=?', [date , num] , async (eror,ress) => {
+            if(eror) {console.log(eror.message)}
+            else {console.log('INSERT')}
+        })
         // INSERTION
         db.query('INSERT INTO notif_cmnd_budg SET nmr_dossier=?', [num] , async (err,ress) => {
             if(err) {console.log(err.message)}
@@ -310,6 +326,12 @@ router2.post('/budget/', (req, res) => {
         const num = numeroDoss
         var taille = 0
         console.log(num)
+        var date = new Date();
+        //
+        db.query('UPDATE services SET budget_compt=? WHERE nmr_dossier_sm=?', [date , num] , async (eror,ress) => {
+            if(eror) {console.log(eror.message)}
+            else {console.log('INSERT')}
+        })
         // INSERTION
         db.query('INSERT INTO notif_budg_cmpt SET nmr_dossier=?', [num] , async (err,ress) => {
             if(err) {console.log(err.message)}
@@ -419,11 +441,18 @@ router2.post('/nouvcmnd',(req , res) => {
         if(errrr){console.log(errrr.message)}
         else{
              position = resss[0].nmr_dossier_sm
+             //
+             var date = new Date()
+             var data = [20 , 10 , 5 , 5 , 'marche3' , date , position]
+             db.query("UPDATE services SET duree1=? , duree2=? , duree3=? , duree4=? , type_de_prestation=? , march_cmnde=? , create_time=DEFAULT WHERE nmr_dossier_sm =?", data , (eror,results) => {
+                 if(eror){console.log(eror.message)}
+             })
+             
              // AFFICHER DANS TABLE COMMANDE
              db.query("INSERT INTO notif_mar_cmnd SET `nmr_dossier`=?",[position], (errorr , rs) => {
                 if(errorr) {console.log(errorr.message)}
                 else{console.log('INSERTION COMMANDE')
-                            // RECUPERER LA TAILLE DU COMMANDE 
+                    // RECUPERER LA TAILLE DU COMMANDE 
                     db.query("SELECT COUNT(*) AS taille FROM notif_mar_cmnd " , async (errr , resss) =>{
                         if(errr){console.log(errr.message)}
                         else{
@@ -610,7 +639,7 @@ router2.post('/archv/', async(req, res) => {
             infar.numConv = results[0].nmr_de_convention
             infar.obs1 = results[0].observation_sm
             infar.dateTr1 = results[0].date_de_transmission_au_scm
-            infar.duree = results[0].duree_de_traitement_de_dossier_sm
+            infar.duree = results[0].duree1
             infar.dateRec1 = results[0].date_de_reception_scm
             infar.respo2 = results[0].responsable_dossier_scm
             infar.decis2 = results[0].decision_scm
@@ -623,7 +652,7 @@ router2.post('/archv/', async(req, res) => {
             infar.numFacDef = results[0].nmr_facture_difinitive_scm
             infar.numBonRec = results[0].nmr_de_bon_de_reception_scm
             infar.dateTr2 = results[0].date_denvoi_au_sb
-            infar.duree2 = results[0].duree_de_traitement_dossier_scm
+            infar.duree2 = results[0].duree2
             infar.dateRec2 = results[0].date_de_reception_sb
             infar.respo3 = results[0]. responsable_dossier_sb
             infar.obs3 = results[0].observation_sb
@@ -632,7 +661,7 @@ router2.post('/archv/', async(req, res) => {
             infar.dateVisa = results[0].date_de_Visa_ou_rejet_definitif_du_controleur_financier 
             infar.dateMend = results[0].date_de_mandatement
             infar.dateTr3 = results[0].date_de_transmission_au_ac
-            infar.duree3 = results[0].duree_de_traitement_dossier_sb
+            infar.duree3 = results[0].duree3
             infar.dateRec3 = results[0].date_reception_ac
             infar.respo4 = results[0].responsable_dossier_ac
             infar.decis3 = results[0].decision_acp_ou_rej_ac 
@@ -641,7 +670,7 @@ router2.post('/archv/', async(req, res) => {
             infar.datePay = results[0].date_de_paiment_ac
             infar.obs4 = results[0].observation_ac
             infar.dateTr4 = results[0].duree_de_traitement_ac
-            infar.duree4 = results[0].duree_de_traitement_ac
+            infar.duree4 = results[0].duree4
             console.log(infar)
         }
     })
@@ -700,6 +729,7 @@ router2.post('/recup/', (req, res) => {
             inf.respo1 = results[0].responsable_de_dossier_sm
             inf.four = results[0].fournisseur
             inf.objt = results[0].objet
+            inf.duree1 = results[0].duree1
             ////////
             inf.decis2 = results[0].decision_scm
             inf.dateFacPe = results[0].date_facture_proforma_scm
@@ -713,6 +743,7 @@ router2.post('/recup/', (req, res) => {
             inf.numBonRec = results[0].nmr_de_bon_de_reception_scm
             inf.dateTr2 = results[0].date_denvoi_au_sb
             inf.desc2 = results[0].observation_scm
+            inf.duree2 = results[0].duree2
             ////////
             inf.dateCF =  results[0].date_dengagement_au_cf
             inf.dateVisa = results[0].date_de_Visa_ou_rejet_definitif_du_controleur_financier 
@@ -722,6 +753,7 @@ router2.post('/recup/', (req, res) => {
             inf.motif = results[0].motif_de_rejet_eventuel_sb
             inf.dateTr3 = results[0].date_de_transmission_au_ac
             inf.desc3 = results[0].observation_sb
+            inf.duree3 = results[0].duree3
             //////////
             inf.completer =  results[0].pieces_a_completer
             inf.dateComplement = results[0].date_complement_dossier
@@ -729,6 +761,13 @@ router2.post('/recup/', (req, res) => {
             inf.decis4 = results[0].decision_acp_ou_rej_ac
             inf.respo4 = results[0].responsable_dossier_ac
             inf.desc4 = results[0].observation_ac
+            inf.duree4 = results[0].duree4
+            const DATE_FORMATER = require( 'dateformat' );
+            inf.create = DATE_FORMATER( results[0].create_time, "yyyy-mm-dd" )
+            /////////
+            inf.date2=DATE_FORMATER( results[0].march_cmnde, "yyyy-mm-dd" )
+            inf.date3=DATE_FORMATER( results[0].cmnde_budget, "yyyy-mm-dd" )
+            inf.date4=DATE_FORMATER( results[0].budget_compt, "yyyy-mm-dd" )
             /////////
             console.log('RESULT ',inf)
 

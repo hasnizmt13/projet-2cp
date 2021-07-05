@@ -53,7 +53,7 @@ const Compte = () => {
         <div className="marche" >
             <Header userInfo={userInfo} serviceinfo={userInfo.service} num={num} />
             <div className="noyeau-marche">
-                <AccCompte serviceinfo={'/' + userInfo.service} />
+                <AccCompte serviceinfo={userInfo.service} />
             </div>
             <Footer />
         </div>

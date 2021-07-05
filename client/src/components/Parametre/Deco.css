@@ -22,7 +22,7 @@
     background-color: #a3cae521;
     font-weight: bold;
     user-select: none;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
 }
 
 .MenuPara a {
@@ -36,7 +36,7 @@
     border-left: 4px solid transparent;
     box-sizing: border-box;
     font-weight: bold;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
 }
 
 .MenuPara a:hover,
@@ -44,7 +44,7 @@ a.Active {
     border-left: 4px solid #EE66D8;
     ;
     color: #0c48a1;
-    font-family: 'Ouvrir sans', bold, sans-serif;
+    font-family: 'Cairo', sans-serif;
 }
 
 .ProPara {
@@ -54,13 +54,13 @@ a.Active {
 
 .TITRE h1 {
     font-size: 23px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #151515;
 }
 
 .TITRE p {
     font-size: 13px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #5f6593;
     line-height: 20px;
     font-weight: bold;
@@ -68,52 +68,59 @@ a.Active {
 
 .UserName h2 {
     font-size: 20px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #1f234e;
     margin: 40px 0px 0px 50px;
 }
 
 .UserName p {
     font-size: 13px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #5f6593;
     line-height: 20px;
     margin-left: 50px;
     font-weight: bold;
 }
 
-.notifinput input[type="text"],
-input[type="email"],
-input[type="password"] {
+.notifinput #Name,
+#Name,
+#Pname,
+#AMail, .duree {
     height: 30px;
     width: 300px;
     margin: 10px 10px 30px 50px;
     border: 1px solid #a3cae5;
     border-radius: 5px;
     background-color: #fafbfe;
+    outline: none;
+    padding-left: 5px;
 }
 
-.notifinput input[type="text"]:hover,
-input[type="email"]:hover,
-input[type="password"]:hover {
+.notifinput #Name:hover,
+#Name:hover,
+.duree:hover
+#Pname:hover,
+#AMail:hover {
     height: 30px;
     width: 300px;
     margin: 10px 10px 30px 50px;
     border: 1px solid #1f234e;
     border-radius: 5px;
     background-color: #fafbfe;
+    outline: none;
+    font-family: 'Cairo', sans-serif;
 }
 
 .PhotoUser h2 {
     font-size: 20px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #1f234e;
     margin: 40px 0px 0px 50px;
 }
 
 .PhotoUser p {
     font-size: 13px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #5f6593;
     line-height: 20px;
     margin-left: 50px;
@@ -133,7 +140,7 @@ input[type="password"]:hover {
     border: 1px solid #a3cae5;
     border-radius: 5px;
     font-size: 15px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #5f6593;
     background-color: #fafbfe;
     margin: 10px 10px 30px 50px;
@@ -145,7 +152,7 @@ input[type="password"]:hover {
     border: 1px solid #1f234e;
     border-radius: 5px;
     font-size: 15px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #1f234e;
     background-color: #fafbfe;
     margin: 10px 10px 30px 50px;
@@ -161,6 +168,9 @@ input[type="password"]:hover {
     color: #fafbfe;
     background-color: #1f234e;
     margin: 10px 10px 30px 280px;
+    cursor: pointer;
+    
+    
 }
 
 .SauvModif button:hover {
@@ -169,10 +179,11 @@ input[type="password"]:hover {
     border: 1px solid #fafbfe;
     border-radius: 5px;
     font-size: 15px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #fafbfe;
     background-color: #0c48a1;
     margin: 10px 10px 30px 280px;
+    cursor: pointer;
 }
 
 .DemmanderAuto button {
@@ -181,7 +192,7 @@ input[type="password"]:hover {
     border: 1px solid #a3cae5;
     border-radius: 5px;
     font-size: 16px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #5f6593;
     background-color: #fafbfe;
     margin: 10px 10px 30px 180px;
@@ -193,7 +204,7 @@ input[type="password"]:hover {
     border: 1px solid #1f234e;
     border-radius: 5px;
     font-size: 16px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #1f2342;
     background-color: #fafbfe;
     margin: 10px 10px 30px 180px;
@@ -201,13 +212,13 @@ input[type="password"]:hover {
 
 .UserName a {
     color: #999bb1;
-    font-family: 'Ouvrir sans', bold, sans-serif;
+    font-family: 'Cairo', sans-serif;
     margin: 10px 10px 30px 50px;
 }
 
 .UserName a:hover {
     color: #151515;
-    font-family: 'Ouvrir sans', bold, sans-serif;
+    font-family: 'Cairo', sans-serif;
     margin: 10px 10px 30px 50px;
 }
 
@@ -231,7 +242,7 @@ input[type="checkbox"]:hover {
 
 .Gerer span {
     font-size: 15px;
-    font-family: 'Open sans', sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #151515;
     margin: 10px 0px 0px 0px;
 }
@@ -242,7 +253,7 @@ input[type="checkbox"]:hover {
     border: 1px solid #1F234E;
     border-radius: 5px;
     font-size: 14px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #fafbfe;
     background-color: #1F234E;
     margin: 50px 10px 30px 280px;
@@ -254,7 +265,7 @@ input[type="checkbox"]:hover {
     border: 1px solid #fafbfe;
     border-radius: 5px;
     font-size: 14px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #fafbfe;
     background-color: #5f6593;
     margin: 50px 10px 30px 280px;
@@ -266,7 +277,7 @@ input[type="checkbox"]:hover {
     border: 1px solid #a3cae5;
     border-radius: 5px;
     font-size: 15px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #a3cae5;
     background-color: #fafbfe;
     margin: 10px 10px 30px 50px;
@@ -278,7 +289,7 @@ input[type="checkbox"]:hover {
     border: 1px solid #1f234e;
     border-radius: 5px;
     font-size: 15px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #1f234e;
     background-color: #fafbfe;
     margin: 10px 10px 30px 50px;
@@ -290,7 +301,7 @@ input[type="checkbox"]:hover {
     border: 1px solid #a3cae5;
     border-radius: 5px;
     font-size: 15px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #a3cae5;
     background-color: #fafbfe;
     margin: 10px 10px 30px 50px;
@@ -302,7 +313,7 @@ input[type="checkbox"]:hover {
     border: 1px solid #1f234e;
     border-radius: 5px;
     font-size: 15px;
-    font-family: Open Sans, sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #1f234e;
     background-color: #fafbfe;
     margin: 10px 10px 30px 50px;
@@ -310,7 +321,7 @@ input[type="checkbox"]:hover {
 
 .UserName span {
     font-size: 15px;
-    font-family: 'Open sans', sans-serif;
+    font-family: 'Cairo', sans-serif;
     color: #151515;
     margin: 10px 0px 0px 0px;
 }

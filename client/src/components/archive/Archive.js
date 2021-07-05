@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Header from "../services/commun/Header.js"
 import Droite from "../services/commun/Droite.js"
 import Milieu from "./Milieu.js"
-import Footer from "../landing/Footer.js"
+import Footer from "../services/commun/Footer.js"
 const Archive = () => {
     const [userInfo, setUserInfo] = useState({id: '', nom: '', prenom: '',email: '',psswrd: '',service: '',role: '',CT: ''})
     const [num, setNum] = useState([])

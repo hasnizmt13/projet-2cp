@@ -9,7 +9,9 @@ const useForm = (validate) => {
     datePay: '',
     decis: '',
     respo: '',
-    desc: ''
+    desc: '',
+    duree: '',
+    date: ''
   
     }
   });
@@ -27,7 +29,9 @@ const useForm = (validate) => {
               datePay: Moment(jsonRes.comptableInfo.datePay).format('YYYY-MM-DD'),
               decis: jsonRes.comptableInfo.decis,
               respo: jsonRes.comptableInfo.respo,
-              desc: jsonRes.comptableInfo.desc
+              desc: jsonRes.comptableInfo.desc,
+              duree: jsonRes.comptableInfo.duree4,
+              date: jsonRes.comptableInfo.date4
             }) 
             setT(0)
             //console.log(info)
@@ -46,6 +50,8 @@ const [values, setValues] = useState({
     respo: '',
     desc: '',
     file: '',
+    duree: '',
+    date: ''
 
 });
   useEffect(() => {
@@ -57,6 +63,8 @@ const [values, setValues] = useState({
       decis: info.decis,
       respo: info.respo,
       desc: info.desc,
+      duree: info.duree,
+      date: info.date
     })
     console.log(values)
     console.log(info)

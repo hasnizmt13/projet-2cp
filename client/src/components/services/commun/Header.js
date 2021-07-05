@@ -58,7 +58,7 @@ const Header = ({ userInfo, serviceinfo, num }) => {
 
                 <ul className="navbar1 navbar">
                     <li className="nav-el">
-                        <NavLink exact to={"../"+serviceinfo} className="link" activeClassName="active" onClick={SubmitFunc}>Mon service</NavLink>
+                        <NavLink exact to={"../"+userInfo.service} className="link" activeClassName="active" onClick={SubmitFunc}>Mon service</NavLink>
                     </li>
                     <li className="nav-el">
                         <Link exact to='../Archive' className="link" activeClassName="active" onClick={SubmitFunc}>Consultation</Link>

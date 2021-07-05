@@ -11,7 +11,9 @@ const useForm = (validate) => {
       date: '',
       motif: '',
       dateTr: '',
-      desc: ''
+      desc: '',
+      duree: '',
+      date: ''
   
     }
   });
@@ -31,7 +33,9 @@ const useForm = (validate) => {
               date: Moment(jsonRes.budgetInfo.date).format("YYYYY-MM-DD"),
               motif: jsonRes.budgetInfo.motif,
               dateTr: Moment(jsonRes.budgetInfo.dateTr).format("YYYYY-MM-DD"),
-              desc: jsonRes.budgetInfo.desc
+              desc: jsonRes.budgetInfo.desc,
+              duree: jsonRes.budgetInfo.duree3,
+              date: jsonRes.budgetInfo.date3
             }) 
             setT(0)
             //console.log(info)
@@ -52,6 +56,8 @@ const [values, setValues] = useState({
   dateTr: '',
   desc: '',
   file: '',
+  duree: '',
+  date: ''
 
 });
   useEffect(() => {
@@ -64,7 +70,9 @@ const [values, setValues] = useState({
       date: info.date,
       motif: info.motif,
       dateTr: info.dateTr,
-      desc: info.desc
+      desc: info.desc,
+      duree : info.duree,
+      date: info.date
     })
     console.log(values)
     console.log(info)

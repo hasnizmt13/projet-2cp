@@ -12,7 +12,7 @@ const FirstPage = () => {
                 <p> facilté les opérations financières.</p>
                 <p> Pour que l'utilisateur puisse travailler et profiter au maximum des fonctionnalitéés de </p>
                 <p> SM ESI, voici un guide détailé pour toutes les fonctionnalités et les problèmes qui peuvent </p>
-                <p> se poser.</p>
+                <p> se poser à un utilisateur connecté ou non connecté.</p>
 
             </div>
         </div>

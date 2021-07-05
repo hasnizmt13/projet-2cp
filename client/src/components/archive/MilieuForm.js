@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import './MilieuForm.css'
 import Footer from "../services/commun/Footer.js"
 import Droite from "../services/commun/Droite.js"
+import Moment from "moment"
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
 const MilieuForm = ({numDoss}) => {
     const [values, setValues] = useState({
@@ -99,6 +100,7 @@ const MilieuForm = ({numDoss}) => {
                     dateTr4: jsonRes.archiveInfo.dateTr4,
                     duree4: jsonRes.archiveInfo.duree4
                 }) 
+                
             }
                  
             
@@ -134,11 +136,27 @@ const MilieuForm = ({numDoss}) => {
                     <table className="ta">
                         <tr className="row">
                             <td>Date lancement</td>
-                            <td>{values.dateLanc}</td>
+                                {
+                                Moment(values.dateLanc).format("DD-MM-YYYY") !== 'Invalid date' &&
+                                <td> {Moment(values.dateLanc).format("DD-MM-YYYY")}</td>
+                                }
+                                {
+                                    Moment(values.dateLanc).format("DD-MM-YYYY") == 'Invalid date'
+                                    &&
+                                    <td> {'/'}</td>
+                                }
                         </tr>
                         <tr className="row">
                             <td>Date d'ouverture</td>
-                            <td>{values.dateOuv}</td>
+                            {
+                                Moment(values.dateOuv).format("DD-MM-YYYY") !== 'Invalid date' &&
+                                <td> {Moment(values.dateOuv).format("DD-MM-YYYY")}</td>
+                                }
+                                {
+                                    Moment(values.dateOuv).format("DD-MM-YYYY") == 'Invalid date'
+                                    &&
+                                    <td> {'/'}</td>
+                                }
                         </tr>
                         <tr className="row">
                             <td>Type du dossier</td>
@@ -157,11 +175,11 @@ const MilieuForm = ({numDoss}) => {
                             <td>{values.respo1}</td>
                         </tr>
                         <tr className="row">
-                            <td>Décision</td>
+                            <td>Decision</td>
                             <td>{values.decis1}</td>
                         </tr>
                         <tr className="row">
-                            <td>Numéro de convention</td>
+                            <td>Numero de convention</td>
                             <td>{values.numConv}</td>
                         </tr>
                         <tr className="row">
@@ -174,7 +192,7 @@ const MilieuForm = ({numDoss}) => {
                         </tr>
                         <tr className="row">
                             <td>Duree</td>
-                            <td>{values.duree}</td>
+                            <td>{values.duree + " jours"}</td>
                         </tr>
                     </table>
                 </div>
@@ -184,15 +202,23 @@ const MilieuForm = ({numDoss}) => {
                 <div className="tab-container">
                     <table className="ta">
                         <tr className="row">
-                            <td>Date récéption</td>
-                            <td>{values.dateRec1}</td>
+                            <td>Date reception</td>
+                            {
+                                Moment(values.dateRec1).format("DD-MM-YYYY") !== 'Invalid date' &&
+                                <td> {Moment(values.dateRec1).format("DD-MM-YYYY")}</td>
+                                }
+                                {
+                                    Moment(values.dateRec1).format("DD-MM-YYYY") == 'Invalid date'
+                                    &&
+                                    <td> {'/'}</td>
+                                }
                         </tr>
                         <tr className="row">
                             <td>Responsable</td>
                             <td>{values.respo2}</td>
                         </tr>
                         <tr className="row">
-                            <td>Décision</td>
+                            <td>Decision</td>
                             <td>{values.decis2}</td>
                         </tr>
                         <tr className="row">
@@ -200,7 +226,7 @@ const MilieuForm = ({numDoss}) => {
                             <td>{values.obs2}</td>
                         </tr>
                         <tr className="row">
-                            <td>Numéro de facture</td>
+                            <td>Numero de facture</td>
                             <td>{values.numFac}</td>
                         </tr>
                         <tr className="row">
@@ -216,7 +242,7 @@ const MilieuForm = ({numDoss}) => {
                             <td>{values.numBon}</td>
                         </tr>
                         <tr className="row">
-                            <td>Date réception perofrma</td>
+                            <td>Date reception perofrma</td>
                             <td>{values.dateRecPr}</td>
                         </tr>
                         <tr className="row">
@@ -224,7 +250,7 @@ const MilieuForm = ({numDoss}) => {
                             <td>{values.numFacDef}</td>
                         </tr>
                         <tr className="row">
-                            <td>Numero bon réception</td>
+                            <td>Numero bon reception</td>
                             <td>{values.numBonRec}</td>
                         </tr>
                         <tr className="row">
@@ -233,7 +259,7 @@ const MilieuForm = ({numDoss}) => {
                         </tr>
                         <tr className="row">
                             <td>Duree</td>
-                            <td>{values.duree2}</td>
+                            <td>{values.duree2 + " jours"}</td>
                         </tr>
                     </table>
                 </div>
@@ -276,7 +302,7 @@ const MilieuForm = ({numDoss}) => {
                         </tr>
                         <tr className="row">
                             <td>Duree</td>
-                            <td>{values.duree3}</td>
+                            <td>{values.duree3+ " jours"}</td>
                         </tr>
                     </table>
                 </div>
@@ -319,7 +345,7 @@ const MilieuForm = ({numDoss}) => {
                         </tr>
                         <tr className="row">
                             <td>Duree</td>
-                            <td>{values.duree4}</td>
+                            <td>{values.duree4 + " jours"}</td>
                         </tr>
                     </table>
                 </div>

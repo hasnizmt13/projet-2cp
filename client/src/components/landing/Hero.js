@@ -6,25 +6,25 @@ import Footer from './Footer.js'
 const Hero = () => {
     return (
         <div className="container">
-            <Header/>
-            <img src={waveimg} width="100%" height="auto" className="wave"/>
+            <Header />
+            <img src={waveimg} width="100%" height="auto" className="wave" />
             <div className="monitoring-container">
                 <h2 className="slogan">ESI Market Monitoring</h2>
                 <p className="text">
-                    La gestion des profiles en ligne, c’est une nouvelle 
-                    méthode de gestion qu’offre ESI Market monitoring pour 
-                    l’entreprise de l’ESI afin de gérer ses services 
+                    La gestion des profiles en ligne, c’est une nouvelle
+                    méthode de gestion qu’offre ESI Market monitoring pour
+                    l’entreprise de l’ESI afin de gérer ses services
                     en toute sécurité et facilité .
                 </p>
                 <div className="btn-container">
                     <button>
-                        <a href="/aide">
+                        <a href="/En-savoir-plusH">
                             En savoir plus
                         </a>
                     </button>
                 </div>
             </div>
-            <img src={heroimg} height="500" className="hero-img"/>
+            <img src={heroimg} height="500" className="hero-img" />
             <div className="desc-container">
                 <div className="cont">
                     <h3 className="title"> ESI market Monitoring</h3>
@@ -45,7 +45,7 @@ const Hero = () => {
             </div>
             <Footer />
         </div>
-        
+
     )
 }
 

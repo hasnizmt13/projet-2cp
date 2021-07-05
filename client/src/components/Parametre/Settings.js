@@ -1,6 +1,6 @@
 import AccSettings from "./AccSettings.js"
 import Header from "../services/commun/Header"
-import Footer from "../landing/Footer.js"
+import Footer from "../services/commun/Footer.js"
 import { useState, useEffect } from 'react'
 const Settings = () => {
     const [userInfo, setUserInfo] = useState({id: '', nom: '', prenom: '',email: '',psswrd: '',service: '',role: '',CT: ''})
@@ -56,7 +56,7 @@ const Settings = () => {
         <div >
             <Header userInfo={userInfo} serviceinfo={userInfo.service} num={num} />
             <div>
-                <AccSettings serviceinfo={'/' + userInfo.service} />
+                <AccSettings serviceinfo={userInfo.service} />
             </div>
             <Footer />
         </div>

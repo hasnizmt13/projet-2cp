@@ -27,6 +27,7 @@ router.post('/userAdmin/', (req , res) => {
             for (let pas = 0; pas < taille ; pas++) { 
                 infousers[pas] = [ result[pas].nom , result[pas].email , result[pas].type , result[pas].service , result[pas].prenom]
             }
+            console.log(infousers)
            // infousers = result
         }
     })
@@ -54,4 +55,4 @@ function Affichuser(){
     return infousers
 }
 Affichuser()
-module.exports = {router , infousers}
+module.exports = {router , infousers ,Affichuser}

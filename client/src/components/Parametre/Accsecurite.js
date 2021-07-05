@@ -42,7 +42,7 @@ const Accsecurite = ({ serviceinfo }) => {
 
 
             <div class="Profil-container">
-                <Gauche />
+                <Gauche serviceInfo={serviceinfo} />
                 <div class="ProPara">
 
                     <div class="TITRE">
@@ -52,18 +52,18 @@ const Accsecurite = ({ serviceinfo }) => {
                     <div class="UserName">
                         <h2>Ancien mot de passe</h2>
                         <p>Saisissez l'ancien mot de passe</p>
-                        <input id="AMP" type="password" name="pass" value ={values.pass} onChange={handleChange}/><br />
-                        <a href="Oublier.html">Mot de passe oublier?</a>
+                        <input id="Pname" type="password" name="pass" value ={values.pass} onChange={handleChange}/><br />
+                        <a href="../Reset">Mot de passe oublier?</a>
                     </div>
                     <div class="UserName">
                         <h2>Nouveau mot de passe</h2>
                         <p>Saisissez un nouveau mot de passe</p>
-                        <input id="NMP" type="password" name="pass1" value={values.pass1} onChange={handleChange}/><br />
+                        <input id="Name" type="password" name="pass1" value={values.pass1} onChange={handleChange}/><br />
                     </div>
                     <div class="UserName">
                         <h2>Confirmer</h2>
                         <p>Saisissez deuxième fois votre nouveau mot de passe</p>
-                        <input id="CNMP" type="password" name="pass2" value={values.pass2} onChange={handleChange}/><br />
+                        <input id="AMail" type="password" name="pass2" value={values.pass2} onChange={handleChange}/><br />
                     </div>
 
                     <div class="SauvModif">

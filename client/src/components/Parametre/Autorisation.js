@@ -31,7 +31,7 @@ const Autorisation = () => {
         <div className="marche" >
             <Header userInfo={userInfo} serviceinfo="#" />
             <div className="noyeau-marche">
-                <Accautorisation serviceinfo={'/' + userInfo.service} />
+                <Accautorisation serviceinfo={userInfo.service} />
             </div>
             <Footer />
         </div>

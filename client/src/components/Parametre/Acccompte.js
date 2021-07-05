@@ -19,7 +19,7 @@ const AccCompte = ({ serviceinfo }) => {
 
         <div>
             <div class="Profil-container">
-                <Gauche />
+                <Gauche serviceInfo={serviceinfo} />
 
                 <form onSubmit={handleSubmit} class="ProPara" noValidate>
 

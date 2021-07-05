@@ -6,7 +6,7 @@ const AccSettings = ({ serviceinfo }) => {
     return (
         <div>
             <div className="Profil-container">
-                <Gauche />
+                <Gauche serviceInfo={serviceinfo}/>
                 <div class="ProPara">
                     <div class="TITRE">
                         <h1>Notifications</h1>

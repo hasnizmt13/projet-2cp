@@ -55,7 +55,7 @@ const Securite = () => {
         <div className="marche" >
             <Header userInfo={userInfo} serviceinfo={userInfo.service} num={num} />
             <div className="noyeau-marche">
-                <Accsecurite serviceinfo={'/' + userInfo.service} />
+                <Accsecurite serviceinfo={userInfo.service} />
             </div>
             <Footer />
         </div>
